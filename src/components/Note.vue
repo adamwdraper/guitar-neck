@@ -1,8 +1,7 @@
 <template>
-    <note>
-      {{ note }}
-    </note>
-  </fret>
+  <note>
+    {{ note }}
+  </note>
 </template>
 
 <script>
@@ -24,7 +23,7 @@
     justify-content: center;
     height: 2em;
     width: 2em;
-    background: rgba(135, 206, 235, .8);
+    background: rgba(135, 206, 235, .9);
     color: #3d3d3d;
     border-radius: 1em;
     position: relative;

@@ -1,18 +1,18 @@
 <template>
   <fret>
-    <string v-for="string in strings">
-      <Note :note="string.note"/>
-    </string>
+    <inlay/>
+    <fret-bar/>
+    <String v-for="string in strings" :string="string"/>
   </fret>
 </template>
 
 <script>
   import Vue from 'vue';
-  import Note from './Note.vue';
+  import String from './String.vue';
 
   export default {
     components: {
-      Note
+      String
     },
     props: {
       strings: Array
@@ -23,63 +23,57 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-  fret {
+  %inlay-design {
+    content: "";
+    background: rgba(225, 225, 225, .7);
+    position: absolute;
     display: flex;
-    flex-direction: column;
-    border-right: 2px silver solid;
+    height: 1em;
+    width: 1em;
+    border-radius: 1em;
+    border: 2px solid silver;
   }
 
   fret {
+    display: flex;
+    flex-direction: column;
     position: relative;
     background-color: ghostwhite;
 
-    &:nth-child(3)::before,
-    &:nth-child(5)::before,
-    &:nth-child(7)::before,
-    &:nth-child(9)::before,
-    &:nth-child(15)::before,
-    &:nth-child(17)::before,
-    &:nth-child(19)::before,
-    &:nth-child(21)::before {
-      background: rgba(225, 225, 225, .7);
+    inlay {
       position: absolute;
-      display: flex;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      z-index: 1;
+    }
+
+    &:nth-child(3) inlay::before,
+    &:nth-child(5) inlay::before,
+    &:nth-child(7) inlay::before,
+    &:nth-child(9) inlay::before,
+    &:nth-child(15) inlay::before,
+    &:nth-child(17) inlay::before,
+    &:nth-child(19) inlay::before,
+    &:nth-child(21) inlay::before {
+      @extend %inlay-design;
       top: calc(50% - .5em);
       left: calc(50% - .5em);
-      height: 1em;
-      width: 1em;
-      border-radius: 1em;
-      border: 2px solid silver;
-      content: "";
     }
 
-    &:nth-child(12)::before,
-    &:nth-child(24)::before {
-      background: rgba(225, 225, 225, .7);
-      position: absolute;
-      display: flex;
+    &:nth-child(12) inlay::before,
+    &:nth-child(24) inlay::before {
+      @extend %inlay-design;
       top: calc(35% - .5em);
       left: calc(50% - .5em);
-      height: 1em;
-      width: 1em;
-      border-radius: 1em;
-      border: 2px solid silver;
-      content: "";
     }
 
-    &:nth-child(12)::after,
-    &:nth-child(24)::after {
-      background: rgba(225, 225, 225, .7);
-      position: absolute;
-      display: flex;
+    &:nth-child(12) inlay::after,
+    &:nth-child(24) inlay::after {
+      @extend %inlay-design;
       top: calc(65% - .5em);
       left: calc(50% - .5em);
-      height: 1em;
-      width: 1em;
-      border-radius: 1em;
-      border: 2px solid silver;
-      content: "";
-      z-index: 1;
     }
 
     &.headstock {
@@ -88,9 +82,16 @@
       border-right: 5px white solid;
     }
 
-    string {
-      padding: .25em .75em;
-      z-index: 2;
+    fret-bar {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+      width: .125em;
+      border-radius: .1em;
+      background-color: rgba(225, 225, 225, .7);
+      z-index: 0
     }
   }
 </style>
