@@ -1,17 +1,19 @@
 <template>
   <fret>
     <string v-for="string in strings">
-      <note>
-        {{ string.note}}
-      </note>
+      <Note :note="string.note"/>
     </string>
   </fret>
 </template>
 
 <script>
   import Vue from 'vue';
+  import Note from './Note.vue';
 
   export default {
+    components: {
+      Note
+    },
     props: {
       strings: Array
     }
@@ -80,21 +82,15 @@
       z-index: 1;
     }
 
+    &.headstock {
+      background: gray;
+      padding: 0 .5em;
+      border-right: 5px white solid;
+    }
+
     string {
       padding: .25em .75em;
       z-index: 2;
-    }
-
-    note {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 2em;
-      width: 2em;
-      background: rgba(135, 206, 235, .7);
-      color: #3d3d3d;
-      border-radius: 1em;
-      position: relative;
     }
   }
 </style>
