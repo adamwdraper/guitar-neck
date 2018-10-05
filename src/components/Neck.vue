@@ -1,8 +1,5 @@
 <template>
   <neck>
-    <tunings>
-      <Fret class="headstock" :strings="tunings.strings"/>
-    </tunings>
     <frets>
       <Fret v-for="fret in frets" :strings="fret.strings"/>
     </frets>
@@ -13,6 +10,9 @@
   import Vue from 'vue';
   import { mapState } from 'vuex';
   import Fret from './Fret.vue';
+
+  // add any custom elements here to suppress warnings
+  Vue.config.ignoredElements.push('neck', 'frets');
 
   export default {
     components: {
@@ -72,16 +72,10 @@
 <style scoped lang="scss">
   neck {
     display: flex;
-    transform: perspective(100em) rotateY(-5deg);
   }
 
-  tunings,
   frets {
     display: flex;
-  }
-
-  tunings {
-    transform: perspective(100em) rotateY(5deg);
   }
 
   frets {

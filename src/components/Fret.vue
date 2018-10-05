@@ -10,6 +10,9 @@
   import Vue from 'vue';
   import String from './String.vue';
 
+  // add any custom elements here to suppress warnings
+  Vue.config.ignoredElements.push('fret', 'inlay', 'fret-bar');
+
   export default {
     components: {
       String
@@ -74,12 +77,6 @@
       @extend %inlay-design;
       top: calc(65% - .5em);
       left: calc(50% - .5em);
-    }
-
-    &.headstock {
-      background: gray;
-      padding: 0 .5em;
-      border-right: 5px white solid;
     }
 
     fret-bar {

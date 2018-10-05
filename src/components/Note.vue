@@ -7,6 +7,9 @@
 <script>
   import Vue from 'vue';
 
+  // add any custom elements here to suppress warnings
+  Vue.config.ignoredElements.push('note');
+
   export default {
     props: {
       note: String

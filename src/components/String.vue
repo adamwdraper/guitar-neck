@@ -8,6 +8,9 @@
   import Vue from 'vue';
   import Note from './Note.vue';
 
+  // add any custom elements here to suppress warnings
+  Vue.config.ignoredElements.push('string');
+
   export default {
     components: {
       Note
@@ -39,6 +42,13 @@
     @for $i from 0 to 10 {
       &:nth-child(#{$i + 1})::before {
         height: .03em * $i;
+      }
+    }
+
+    &.no-string {
+
+      &::before {
+        display: none;
       }
     }
   }

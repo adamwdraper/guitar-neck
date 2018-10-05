@@ -1,15 +1,20 @@
 <template>
   <div id="app">
-    <Neck/>
+    <guitar>
+      <Headstock/>
+      <Neck/>
+    </guitar>
   </div>
 </template>
 
 <script>
+import Headstock from './components/Headstock.vue';
 import Neck from './components/Neck.vue';
 
 export default {
   name: 'app',
   components: {
+    Headstock,
     Neck
   }
 }
@@ -29,5 +34,10 @@ body {
   align-items: center;
   width: 100vw;
   height: 100vh;
+}
+
+guitar {
+  display: flex;
+  transform: perspective(100em) rotateY(-5deg);
 }
 </style>
