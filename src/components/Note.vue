@@ -26,9 +26,10 @@
     justify-content: center;
     height: 2em;
     width: 2em;
-    background: rgba(135, 206, 235, .9);
+    background: rgb(135, 206, 235);
     color: #3d3d3d;
     border-radius: 1em;
     position: relative;
+    // box-shadow: 0 0 1px rgba(99, 114, 130, 0.3), 0 3px 0px rgba(27, 39, 51, 0.15);
   }
 </style>

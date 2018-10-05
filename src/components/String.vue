@@ -16,7 +16,7 @@
       Note
     },
     props: {
-      string: Array
+      string: Object
     }
   };
 </script>
