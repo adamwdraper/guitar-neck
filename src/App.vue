@@ -8,36 +8,40 @@
 </template>
 
 <script>
-import Headstock from './components/Headstock.vue';
-import Neck from './components/Neck.vue';
+  import Vue from 'vue';
+  import Headstock from './components/Headstock.vue';
+  import Neck from './components/Neck.vue';
 
-export default {
-  name: 'app',
-  components: {
-    Headstock,
-    Neck
+  // add any custom elements here to suppress warnings
+  Vue.config.ignoredElements.push('guitar');
+
+  export default {
+    name: 'app',
+    components: {
+      Headstock,
+      Neck
+    }
   }
-}
-</script>
+  </script>
 
-<style lang="scss">
-html,
-body {
-    font-family: 'Rubik', sans-serif;
+  <style lang="scss">
+  html,
+  body {
+      font-family: 'Rubik', sans-serif;
+      width: 100vw;
+      height: 100vh;
+  }
+
+  #app {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100vw;
     height: 100vh;
-}
+  }
 
-#app {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
-  height: 100vh;
-}
-
-guitar {
-  display: flex;
-  transform: perspective(100em) rotateY(-5deg);
-}
+  guitar {
+    display: flex;
+    transform: perspective(100em) rotateY(-5deg);
+  }
 </style>

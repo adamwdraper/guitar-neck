@@ -19,7 +19,7 @@ export default new Vuex.Store({
       'G',
       'G#'
     ],
-    fretCount: 24,
+    fretCount: 22,
     tuning: [
       'E',
       'B',
@@ -27,10 +27,13 @@ export default new Vuex.Store({
       'D',
       'A',
       'E'
-    ]
+    ],
+    root: 'A'
   },
   mutations: {
-
+    setRoot(state, note) {
+      state.root = note;
+    }
   },
   actions: {
 

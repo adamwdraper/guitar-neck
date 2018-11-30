@@ -1,12 +1,12 @@
 <template>
   <headstock>
-    <String class="no-string" v-for="string in tunings.strings" :string="string"/>
+    <String class="no-string" v-for="(string, index) in tunings.strings" :string="string" :key="index"/>
     <nut></nut>
-    <notes>
+    <!-- <notes>
       <w>
         <n v-for="note in notes" :class="note.toLowerCase().replace(/#/, '-sharp')">{{ note }}</n>
       </w>
-    </notes>
+    </notes> -->
   </headstock>
 </template>
 
@@ -16,7 +16,7 @@
   import String from './String.vue';
 
   // add any custom elements here to suppress warnings
-  Vue.config.ignoredElements.push('headstock', 'nut');
+  Vue.config.ignoredElements.push('headstock', 'nut', 'notes', 'w', 'n');
 
   export default {
     components: {
@@ -83,7 +83,7 @@
   notes {
     border: 4em solid rgba(255,255,255, .8);
     position: absolute;
-    display: flex;
+    display: none;
     width: 2.5em;
     height: 2.5em;
     padding: 0;
