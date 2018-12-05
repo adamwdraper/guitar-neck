@@ -1,50 +1,25 @@
 <template>
   <div id="app">
-    <guitar>
-      <Headstock/>
-      <Neck/>
-    </guitar>
+    <Guitar/>
   </div>
 </template>
 
 <script>
   import Vue from 'vue';
-  import { mapState } from 'vuex';
-
-  import Headstock from './components/Headstock.vue';
-  import Neck from './components/Neck.vue';
+  import Guitar from './components/Guitar.vue';
 
   // add any custom elements here to suppress warnings
-  Vue.config.ignoredElements.push('guitar');
+  Vue.config.ignoredElements.push();
 
   export default {
     name: 'app',
     components: {
-      Headstock,
-      Neck
-    },
-    computed: {
-      ...mapState({
-        notes: state => state.notes
-      }),
-    },
-    created() {
-      // set initial tuning
-      const tuning = [
-        this.notes[7],
-        this.notes[2],
-        this.notes[10],
-        this.notes[5],
-        this.notes[0],
-        this.notes[7]
-      ];
-
-      this.$store.commit('setTuning', tuning);
+      Guitar
     }
-  }
-  </script>
+  };
+</script>
 
-  <style lang="scss">
+<style lang="scss">
   html,
   body {
       font-family: 'Rubik', sans-serif;
@@ -58,10 +33,5 @@
     align-items: center;
     width: 100vw;
     height: 100vh;
-  }
-
-  guitar {
-    display: flex;
-    transform: perspective(100em) rotateY(-5deg);
   }
 </style>

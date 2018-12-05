@@ -39,7 +39,7 @@ export default new Vuex.Store({
         isSharp: false
       },
       {
-        name: 'G',
+        name: 'F',
         isSharp: false
       },
       {
@@ -57,10 +57,14 @@ export default new Vuex.Store({
     ],
     fretCount: 22,
     tuning: null,
+    noteGrid: null,
     focus: null,
     root: null
   },
   mutations: {
+    setNoteGrid(state, noteGrid) {
+      state.noteGrid = noteGrid;
+    },
     setTuning(state, tuning) {
       state.tuning = tuning;
     },

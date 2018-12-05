@@ -21,39 +21,12 @@
     computed: {
       ...mapState({
         notes: state => state.notes,
+        noteGrid: state => state.noteGrid,
         fretCount: state => state.fretCount,
         tuning: state => state.tuning
       }),
       frets() {
-        const frets = [];
-
-        for (let i = 1; i <= this.fretCount; i++) {
-          let fret = {
-            strings: []
-          };
-
-          for (let x = 1; x <= this.tuning.length; x++) {
-            let tuning = this.tuning[x - 1];
-            let baseNoteIndex = this.notes.indexOf(tuning);
-
-            // generate notes
-            let note = baseNoteIndex + i;
-
-            note = note >= this.notes.length ? note % this.notes.length : note;
-
-            fret.strings.push({
-              note: {
-                ...this.notes[note],
-                fret: i,
-                string: tuning
-              }
-            });
-          }
-
-          frets.push(fret);
-        }
-
-        return frets;
+        return this.noteGrid.slice(1);
       }
     }
   };
