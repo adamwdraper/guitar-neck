@@ -1,6 +1,6 @@
 <template>
-  <note @click="setRoot" :class="isRoot ? 'is-root' : ''">
-    {{ note }}
+  <note @mouseenter="setFocus" @mouseleave="setFocus" :class="{'is-root': isRoot, 'is-focus': isFocus}">
+    {{ note.name }}
   </note>
 </template>
 
@@ -13,17 +13,24 @@
 
   export default {
     props: {
-      note: String
+      note: Object
     },
     computed: {
       ...mapState({
+        focus: state => state.root,
         root: state => state.root
       }),
+      isFocus() {
+        return this.focus === this.note;
+      },
       isRoot() {
         return this.root === this.note;
       }
     },
     methods: {
+      setFocus() {
+        this.$store.commit('setFocus', this.isFocus ? null : this.note);
+      },
       setRoot() {
         this.$store.commit('setRoot', this.isRoot ? null : this.note);
       }
@@ -51,7 +58,7 @@
       background: rgb(225, 225, 225);
     }
 
-    &.is-root {
+    &.is-focus {
       background: rgb(135, 206, 235);
     }
   }

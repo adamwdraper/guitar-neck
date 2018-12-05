@@ -9,6 +9,8 @@
 
 <script>
   import Vue from 'vue';
+  import { mapState } from 'vuex';
+
   import Headstock from './components/Headstock.vue';
   import Neck from './components/Neck.vue';
 
@@ -20,6 +22,24 @@
     components: {
       Headstock,
       Neck
+    },
+    computed: {
+      ...mapState({
+        notes: state => state.notes
+      }),
+    },
+    created() {
+      // set initial tuning
+      const tuning = [
+        this.notes[7],
+        this.notes[2],
+        this.notes[10],
+        this.notes[5],
+        this.notes[0],
+        this.notes[7]
+      ];
+
+      this.$store.commit('setTuning', tuning);
     }
   }
   </script>
