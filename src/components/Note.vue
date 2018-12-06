@@ -1,5 +1,5 @@
 <template>
-  <note @mouseenter="setFocus" @mouseleave="setFocus" :class="{'is-root': isRoot, 'is-focus': isFocus}">
+  <note @mouseenter="setFocus" @mouseleave="setFocus" @click="setRoot" :class="{'is-root': isRoot, 'is-focus': isFocus}">
     {{ note.name }}
   </note>
 </template>
@@ -7,6 +7,7 @@
 <script>
   import Vue from 'vue';
   import { mapState } from 'vuex';
+  import { get } from 'lodash';
 
   // add any custom elements here to suppress warnings
   Vue.config.ignoredElements.push('note');
@@ -17,14 +18,14 @@
     },
     computed: {
       ...mapState({
-        focus: state => state.root,
+        focus: state => state.focus,
         root: state => state.root
       }),
       isFocus() {
-        return this.focus === this.note;
+        return get(this.focus, 'name') === get(this.note, 'name');
       },
       isRoot() {
-        return this.root === this.note;
+        return get(this.root, 'fret') === get(this.note, 'fret') && get(this.root, 'string') === get(this.note, 'string');
       }
     },
     methods: {
@@ -52,14 +53,15 @@
     color: #3d3d3d;
     border-radius: 1em;
     position: relative;
-    // box-shadow: 0 0 1px rgba(99, 114, 130, 0.3), 0 3px 0px rgba(27, 39, 51, 0.15);
-
-    &:hover {
-      background: rgb(225, 225, 225);
-    }
+    transition: background 0.5s, color 0.5s;
 
     &.is-focus {
       background: rgb(135, 206, 235);
+    }
+
+    &.is-root {
+      background: #ED6A5A;
+      color: white;
     }
   }
 </style>

@@ -1,12 +1,14 @@
 <template>
   <div id="app">
     <Guitar/>
+    <Info/>
   </div>
 </template>
 
 <script>
   import Vue from 'vue';
   import Guitar from './components/Guitar.vue';
+  import Info from './components/Info.vue';
 
   // add any custom elements here to suppress warnings
   Vue.config.ignoredElements.push();
@@ -14,7 +16,8 @@
   export default {
     name: 'app',
     components: {
-      Guitar
+      Guitar,
+      Info
     }
   };
 </script>
@@ -29,6 +32,7 @@
 
   #app {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100vw;
