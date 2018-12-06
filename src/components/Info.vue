@@ -25,6 +25,20 @@
           {{ root.string }}
         </value>
       </stat>
+      <stat>
+        <label>
+          {{ scale | capitalize }} Scale
+        </label>
+        <value>
+          <scale>
+            <note v-for="(note, index) in scaleNotes" :key="index">
+              <name>
+                {{ note.name }}
+              </name>
+            </note>
+          </scale>
+        </value>
+      </stat>
     </template>
     <template v-else>
       Select a note
@@ -35,15 +49,37 @@
 <script>
   import Vue from 'vue';
   import { mapState } from 'vuex';
+  import { findIndex } from 'lodash';
 
   // add any custom elements here to suppress warnings
-  Vue.config.ignoredElements.push('note');
+  Vue.config.ignoredElements.push('info', 'stat', 'label', 'value');
 
   export default {
     computed: {
       ...mapState({
-        root: state => state.root
-      })
+        notes: state => state.notes,
+        root: state => state.root,
+        scale: state => state.scale,
+        scalePatterns: state => state.scalePatterns
+      }),
+      scaleNotes() {
+        const pattern = this.scalePatterns[this.scale].slice(0, -1);
+        const scaleNotes = [this.root];
+        const baseNoteIndex = findIndex(this.notes, o => o.name === this.root.name);
+        let noteIndexFromBase = baseNoteIndex;
+
+        for (let steps of pattern) {
+          // generate notes
+          noteIndexFromBase = noteIndexFromBase + steps;
+
+          const noteIndex = noteIndexFromBase >= this.notes.length ? noteIndexFromBase % this.notes.length : noteIndexFromBase;
+          const note = this.notes[noteIndex];
+
+          scaleNotes.push(note);
+        }
+
+        return scaleNotes;
+      }
     }
   };
 </script>
@@ -55,7 +91,7 @@
     display: flex;
     margin-top: 3em;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
 
     stat {
       display: flex;
@@ -69,6 +105,20 @@
 
       value {
         font-size: 2em;
+
+        scale {
+          display: flex;
+
+          note {
+            margin-right: 1em;
+            display: flex;
+            flex-direction: column;
+
+            name {
+
+            }
+          }
+        }
       }
     }
   }

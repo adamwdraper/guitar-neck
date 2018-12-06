@@ -55,11 +55,32 @@ export default new Vuex.Store({
         isSharp: false
       }
     ],
+    scalePatterns: {
+      major: [
+        2,
+        2,
+        1,
+        2,
+        2,
+        2,
+        1
+      ],
+      minor: [
+        2,
+        1,
+        2,
+        2,
+        1,
+        2,
+        2
+      ]
+    },
     fretCount: 22,
     tuning: null,
     noteGrid: null,
     focus: null,
-    root: null
+    root: null,
+    scale: 'major'
   },
   mutations: {
     setNoteGrid(state, noteGrid) {
