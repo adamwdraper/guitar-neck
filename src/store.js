@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import { findIndex } from 'lodash';
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -57,22 +59,22 @@ export default new Vuex.Store({
     ],
     scalePatterns: {
       major: [
+        0,
         2,
-        2,
-        1,
-        2,
-        2,
-        2,
-        1
+        4,
+        5,
+        7,
+        9,
+        11
       ],
       minor: [
+        0,
         2,
-        1,
-        2,
-        2,
-        1,
-        2,
-        2
+        3,
+        5,
+        7,
+        8,
+        10
       ]
     },
     fretCount: 22,
@@ -81,6 +83,19 @@ export default new Vuex.Store({
     focus: null,
     root: null,
     scale: 'major'
+  },
+  getters: {
+    getRootScale: state => {
+      if (!state.root) {
+        return [];
+      }
+      
+      const pattern = state.scalePatterns[state.scale];
+      const rootIndex = findIndex(state.notes, n => n.name === state.root.name);
+      const notes = [...state.notes.slice(rootIndex), ...state.notes.slice(0, rootIndex)];
+
+      return pattern.map(i => notes[i]);
+    }
   },
   mutations: {
     setNoteGrid(state, noteGrid) {

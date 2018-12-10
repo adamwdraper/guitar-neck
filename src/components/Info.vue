@@ -31,7 +31,7 @@
         </label>
         <value>
           <scale>
-            <note v-for="(note, index) in scaleNotes" :key="index">
+            <note v-for="(note, index) in getRootScale" :key="index">
               <name>
                 {{ note.name }}
               </name>
@@ -48,11 +48,10 @@
 
 <script>
   import Vue from 'vue';
-  import { mapState } from 'vuex';
-  import { findIndex } from 'lodash';
+  import { mapState, mapGetters } from 'vuex';
 
   // add any custom elements here to suppress warnings
-  Vue.config.ignoredElements.push('info', 'stat', 'label', 'value');
+  Vue.config.ignoredElements.push('info', 'stat', 'label', 'value', 'scale', 'name');
 
   export default {
     computed: {
@@ -62,24 +61,9 @@
         scale: state => state.scale,
         scalePatterns: state => state.scalePatterns
       }),
-      scaleNotes() {
-        const pattern = this.scalePatterns[this.scale].slice(0, -1);
-        const scaleNotes = [this.root];
-        const baseNoteIndex = findIndex(this.notes, o => o.name === this.root.name);
-        let noteIndexFromBase = baseNoteIndex;
-
-        for (let steps of pattern) {
-          // generate notes
-          noteIndexFromBase = noteIndexFromBase + steps;
-
-          const noteIndex = noteIndexFromBase >= this.notes.length ? noteIndexFromBase % this.notes.length : noteIndexFromBase;
-          const note = this.notes[noteIndex];
-
-          scaleNotes.push(note);
-        }
-
-        return scaleNotes;
-      }
+      ...mapGetters([
+        'getRootScale'
+      ])
     }
   };
 </script>
@@ -100,11 +84,12 @@
       min-width: 5em;
 
       label {
-
+        color: $color-gray-light;
       }
 
       value {
         font-size: 2em;
+        color: $color-gray-dark;
 
         scale {
           display: flex;

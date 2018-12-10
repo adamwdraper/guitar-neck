@@ -49,18 +49,18 @@
     justify-content: center;
     height: 2em;
     width: 2em;
-    background: rgb(235, 235, 235);
-    color: #3d3d3d;
+    background: $color-gray-light;
+;
     border-radius: 1em;
     position: relative;
     transition: background 0.5s, color 0.5s;
 
     &.is-focus {
-      background: rgb(135, 206, 235);
+      background: $color-blue;
     }
 
     &.is-root {
-      background: #ED6A5A;
+      background: $color-red;
       color: white;
     }
   }

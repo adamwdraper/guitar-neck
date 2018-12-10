@@ -28,6 +28,7 @@
       font-family: 'Rubik', sans-serif;
       width: 100vw;
       height: 100vh;
+      color: #263d42;
   }
 
   #app {
