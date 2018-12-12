@@ -1,24 +1,18 @@
 <template>
   <div id="app">
-    <Guitar/>
-    <Info/>
+    <router-view name="guitar"></router-view>
+    <router-view name="info"></router-view>
   </div>
 </template>
 
 <script>
   import Vue from 'vue';
-  import Guitar from './components/Guitar.vue';
-  import Info from './components/Info.vue';
 
   // add any custom elements here to suppress warnings
   Vue.config.ignoredElements.push();
 
   export default {
-    name: 'app',
-    components: {
-      Guitar,
-      Info
-    }
+    name: 'app'
   };
 </script>
 

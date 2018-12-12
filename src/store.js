@@ -82,14 +82,14 @@ export default new Vuex.Store({
     noteGrid: null,
     focus: null,
     root: null,
-    scale: 'major'
+    scale: null
   },
   getters: {
     getRootScale: state => {
       if (!state.root) {
         return [];
       }
-      
+
       const pattern = state.scalePatterns[state.scale];
       const rootIndex = findIndex(state.notes, n => n.name === state.root.name);
       const notes = [...state.notes.slice(rootIndex), ...state.notes.slice(0, rootIndex)];
@@ -109,6 +109,9 @@ export default new Vuex.Store({
     },
     setRoot(state, note) {
       state.root = note;
+    },
+    setScale(state, scale) {
+      state.scale = scale;
     }
   },
   actions: {

@@ -1,7 +1,7 @@
 <template>
-  <note @mouseenter="setFocus" @mouseleave="setFocus" @click="setRoot" :class="{'is-root': isRoot, 'is-focus': isFocus}">
+  <router-link tag="note" :to="to" @mouseenter="setFocus" @mouseleave="setFocus" :class="{'is-root': isRoot, 'is-focus': isFocus}">
     {{ note.name }}
-  </note>
+  </router-link>
 </template>
 
 <script>
@@ -19,21 +19,29 @@
     computed: {
       ...mapState({
         focus: state => state.focus,
-        root: state => state.root
+        root: state => state.root,
+        scale: state => state.scale
       }),
       isFocus() {
         return get(this.focus, 'name') === get(this.note, 'name');
       },
       isRoot() {
         return this.root && get(this.root, 'fret') === get(this.note, 'fret') && get(this.root, 'string') === get(this.note, 'string');
+      },
+      to() {
+        return {
+          name: 'root',
+          params: {
+            fret: get(this.note, 'fret'),
+            string: get(this.note, 'string'),
+            scale: this.scale || 'major'
+          }
+        };
       }
     },
     methods: {
       setFocus() {
         this.$store.commit('setFocus', this.isFocus ? null : this.note);
-      },
-      setRoot() {
-        this.$store.commit('setRoot', this.isRoot ? null : this.note);
       }
     }
   };
@@ -50,7 +58,6 @@
     height: 2em;
     width: 2em;
     background: $color-gray-light;
-;
     border-radius: 1em;
     position: relative;
     transition: background 0.5s, color 0.5s;
