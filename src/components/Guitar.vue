@@ -70,9 +70,10 @@
       },
       setParams(params) {
         if (get(params, 'fret') && get(params, 'string') && get(params, 'scale')) {
-          this.$store.commit('setRoot', this.noteGrid[get(params, 'fret')].strings[get(params, 'string')].note);
-
-          this.$store.commit('setScale', get(params, 'scale'));
+          this.$store.commit('setParams', {
+            root: this.noteGrid[get(params, 'fret')].strings[get(params, 'string')].note,
+            scale: get(params, 'scale')
+          });
         }
       }
     },

@@ -1,5 +1,5 @@
 <template>
-  <router-link tag="note" :to="to" @mouseenter="setFocus" @mouseleave="setFocus" :class="{'is-root': isRoot, 'is-focus': isFocus}">
+  <router-link tag="note" :to="to" @mouseenter.native="setFocus" @mouseleave.native="setFocus" :class="{'is-root': isRoot, 'is-focus': isFocus}">
     {{ note.name }}
   </router-link>
 </template>

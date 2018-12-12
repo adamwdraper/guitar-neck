@@ -57,6 +57,128 @@ export default new Vuex.Store({
         isSharp: false
       }
     ],
+    scaleMeta: [
+      {
+        interval: {
+          name: 'Perfect Unison',
+          short: 'P1'
+        },
+        degree: {
+          name: 'Root',
+          short: '1'
+        }
+      },
+      {
+        interval: {
+          name: 'Minor Second',
+          short: 'm2'
+        },
+        degree: {
+          name: 'Flat Second',
+          short: 'b2'
+        }
+      },
+      {
+        interval: {
+          name: 'Major Second',
+          short: 'M2'
+        },
+        degree: {
+          name: 'Second',
+          short: '2'
+        }
+      },
+      {
+        interval: {
+          name: 'Minor Third',
+          short: 'm3'
+        },
+        degree: {
+          name: 'Flat Third',
+          short: 'b3'
+        }
+      },
+      {
+        interval: {
+          name: 'Major Third',
+          short: 'M3'
+        },
+        degree: {
+          name: 'Third',
+          short: '3'
+        }
+      },
+      {
+        interval: {
+          name: 'Perfect Fourth',
+          short: 'P4'
+        },
+        degree: {
+          name: 'Forth',
+          short: '4'
+        }
+      },
+      {
+        interval: {
+          name: 'Diminished Fifth',
+          short: 'd5'
+        },
+        degree: {
+          name: 'Flat Fifth',
+          short: 'b5'
+        }
+      },
+      {
+        interval: {
+          name: 'Perfect Fifth',
+          short: 'P5'
+        },
+        degree: {
+          name: 'Fifth',
+          short: '5'
+        }
+      },
+      {
+        interval: {
+          name: 'Minor Sixth',
+          short: 'm6'
+        },
+        degree: {
+          name: 'Flat Sixth',
+          short: 'b6'
+        }
+      },
+      {
+        interval: {
+          name: 'Major Sixth',
+          short: 'M6'
+        },
+        degree: {
+          name: 'Sixth',
+          short: '6'
+        }
+      },
+      {
+        interval: {
+          name: 'Minor Seventh',
+          short: 'm7'
+        },
+        degree: {
+          name: 'Flat Seventh',
+          short: 'b7'
+        }
+      },
+      {
+        interval: {
+          name: 'Major Seventh',
+          short: 'M7'
+        },
+        degree: {
+          name: 'Seventh',
+          short: '7'
+        }
+      }
+    ],
     scalePatterns: {
       major: [
         0,
@@ -94,7 +216,10 @@ export default new Vuex.Store({
       const rootIndex = findIndex(state.notes, n => n.name === state.root.name);
       const notes = [...state.notes.slice(rootIndex), ...state.notes.slice(0, rootIndex)];
 
-      return pattern.map(i => notes[i]);
+      return pattern.map(i => ({
+        ...notes[i],
+        meta: state.scaleMeta[i]
+      }));
     }
   },
   mutations: {
@@ -107,11 +232,10 @@ export default new Vuex.Store({
     setFocus(state, note) {
       state.focus = note;
     },
-    setRoot(state, note) {
-      state.root = note;
-    },
-    setScale(state, scale) {
-      state.scale = scale;
+    setParams(state, params) {
+      state.root = params.root;
+
+      state.scale = params.scale;
     }
   },
   actions: {

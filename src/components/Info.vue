@@ -35,6 +35,9 @@
               <name>
                 {{ note.name }}
               </name>
+              <interval>
+                {{ note.meta.degree.short }}
+              </interval>
             </note>
           </scale>
         </value>
@@ -51,7 +54,7 @@
   import { mapState, mapGetters } from 'vuex';
 
   // add any custom elements here to suppress warnings
-  Vue.config.ignoredElements.push('info', 'stat', 'label', 'value', 'scale', 'name');
+  Vue.config.ignoredElements.push('info', 'stat', 'label', 'value', 'scale', 'name', 'interval');
 
   export default {
     computed: {
@@ -101,6 +104,11 @@
 
             name {
 
+            }
+
+            interval {
+              font-size: .65em;
+              color: $color-gray-7;
             }
           }
         }
