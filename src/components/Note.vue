@@ -25,7 +25,7 @@
         return get(this.focus, 'name') === get(this.note, 'name');
       },
       isRoot() {
-        return get(this.root, 'fret') === get(this.note, 'fret') && get(this.root, 'string') === get(this.note, 'string');
+        return this.root && get(this.root, 'fret') === get(this.note, 'fret') && get(this.root, 'string') === get(this.note, 'string');
       }
     },
     methods: {

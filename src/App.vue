@@ -29,6 +29,7 @@
       width: 100vw;
       height: 100vh;
       color: #263d42;
+      margin: 0;
   }
 
   #app {

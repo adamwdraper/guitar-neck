@@ -26,7 +26,7 @@
         tuning: state => state.tuning
       }),
       frets() {
-        return this.noteGrid.slice(1);
+        return this.noteGrid;
       }
     }
   };

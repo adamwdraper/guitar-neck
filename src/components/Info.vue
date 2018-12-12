@@ -41,7 +41,7 @@
       </stat>
     </template>
     <template v-else>
-      Select a note
+      Select a Root note.
     </template>
   </info>
 </template>

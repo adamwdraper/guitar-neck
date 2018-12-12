@@ -1,8 +1,8 @@
 <template>
   <fret>
     <inlay/>
+    <String v-for="(string, index) in strings" :string="string" :key="index"/>
     <fret-bar/>
-    <String v-for="string in strings" :string="string"/>
   </fret>
 </template>
 
@@ -42,6 +42,22 @@
     flex-direction: column;
     position: relative;
     background-color: ghostwhite;
+
+    &:first-child {
+      background-color: gray;
+      border-radius: .25em 0 0 .25em;
+      padding-right: .5em;
+
+      fret-bar {
+        background: white;
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 100%;
+        width: .5em;
+        border-radius: .25em 0 0 .25em;
+      }
+    }
 
     inlay {
       position: absolute;

@@ -1,6 +1,5 @@
 <template>
   <guitar>
-    <Headstock/>
     <Neck/>
   </guitar>
 </template>
@@ -9,7 +8,6 @@
   import Vue from 'vue';
   import { mapState } from 'vuex';
 
-  import Headstock from './Headstock.vue';
   import Neck from './Neck.vue';
 
   // add any custom elements here to suppress warnings
@@ -17,7 +15,6 @@
 
   export default {
     components: {
-      Headstock,
       Neck
     },
     computed: {
