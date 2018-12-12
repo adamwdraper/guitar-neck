@@ -1,43 +1,37 @@
 <template>
   <div id="app">
-    <guitar>
-      <Headstock/>
-      <Neck/>
-    </guitar>
+    <router-view name="guitar"></router-view>
+    <router-view name="info"></router-view>
   </div>
 </template>
 
 <script>
-import Headstock from './components/Headstock.vue';
-import Neck from './components/Neck.vue';
+  import Vue from 'vue';
 
-export default {
-  name: 'app',
-  components: {
-    Headstock,
-    Neck
-  }
-}
+  // add any custom elements here to suppress warnings
+  Vue.config.ignoredElements.push();
+
+  export default {
+    name: 'app'
+  };
 </script>
 
 <style lang="scss">
-html,
-body {
-    font-family: 'Rubik', sans-serif;
+  html,
+  body {
+      font-family: 'Rubik', sans-serif;
+      width: 100vw;
+      height: 100vh;
+      color: #263d42;
+      margin: 0;
+  }
+
+  #app {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     width: 100vw;
     height: 100vh;
-}
-
-#app {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
-  height: 100vh;
-}
-
-guitar {
-  display: flex;
-  transform: perspective(100em) rotateY(-5deg);
-}
+  }
 </style>

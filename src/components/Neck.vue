@@ -1,7 +1,7 @@
 <template>
   <neck>
     <frets>
-      <Fret v-for="fret in frets" :strings="fret.strings"/>
+      <Fret v-for="(fret, index) in frets" :strings="fret.strings" :key="index + 1"/>
     </frets>
   </neck>
 </template>
@@ -21,47 +21,12 @@
     computed: {
       ...mapState({
         notes: state => state.notes,
+        noteGrid: state => state.noteGrid,
         fretCount: state => state.fretCount,
         tuning: state => state.tuning
       }),
-      tunings() {
-        const tunings = {
-          strings: []
-        };
-
-        for (let tuning of this.tuning) {
-          tunings.strings.push({
-            note: tuning
-          });
-        }
-
-        return tunings;
-      },
       frets() {
-        const frets = [];
-
-        for (let i = 1; i <= this.fretCount; i++) {
-          let fret = {
-            strings: []
-          };
-
-          for (let tuning of this.tuning) {
-            let baseNoteIndex = this.notes.indexOf(tuning);
-
-            // generate notes
-            let note = baseNoteIndex + i;
-
-            note = note >= this.notes.length ? note % this.notes.length : note;
-
-            fret.strings.push({
-              note: this.notes[note]
-            });
-          }
-
-          frets.push(fret);
-        }
-
-        return frets;
+        return this.noteGrid;
       }
     }
   };
