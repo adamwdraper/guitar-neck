@@ -1,5 +1,7 @@
 # guitar-neck
 
+My attempt to thoroughly understand music theory for guitar.
+
 ## Project setup
 ```
 npm install
