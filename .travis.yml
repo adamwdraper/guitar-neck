@@ -1,8 +1,21 @@
+language: node_js
+
+branches:
+  only:
+  - master
+
+cache:
+  directories:
+    - node_modules
+
+script:
+  - npm run build
+
 deploy:
   provider: pages
   skip-cleanup: true
-  script: bash scripts/deploy.sh
   github-token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+  local_dir: dist/
   keep-history: true
   on:
     branch: master
