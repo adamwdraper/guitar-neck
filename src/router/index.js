@@ -6,7 +6,7 @@ import Info from '@/components/Info';
 Vue.use(Router);
 
 const appRouter = new Router({
-  mode: 'history',
+  mode: 'hash',
   base: process.env.NODE_ENV === 'production'
     ? '/guitar-neck/'
     : '/',
