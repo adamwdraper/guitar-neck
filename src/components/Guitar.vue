@@ -7,7 +7,7 @@
 <script>
   import Vue from 'vue';
   import { mapState } from 'vuex';
-  import { get } from 'lodash';
+  import { get, isNull } from 'lodash';
 
   import Neck from './Neck.vue';
 
@@ -58,7 +58,7 @@
               note: {
                 ...this.notes[note],
                 fret: i,
-                string: x
+                string: x + 1
               }
             });
           }
@@ -69,9 +69,9 @@
         return grid;
       },
       setParams(params) {
-        if (get(params, 'fret') && get(params, 'string') && get(params, 'scale')) {
+        if (!isNull(get(params, 'fret')) && get(params, 'string') && get(params, 'scale')) {
           this.$store.commit('setParams', {
-            root: this.noteGrid[get(params, 'fret')].strings[get(params, 'string')].note,
+            root: this.noteGrid[get(params, 'fret')].strings[get(params, 'string') - 1].note,
             scale: get(params, 'scale')
           });
         }
