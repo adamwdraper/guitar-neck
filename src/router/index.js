@@ -7,6 +7,9 @@ Vue.use(Router);
 
 const appRouter = new Router({
   mode: 'history',
+  baseUrl: process.env.NODE_ENV === 'production'
+    ? '/guitar-neck/'
+    : '/',
   routes: [
     {
       path: '/:fret/:string/:scale',
