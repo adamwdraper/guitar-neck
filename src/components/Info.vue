@@ -1,47 +1,28 @@
 <template>
   <info>
     <template v-if="root">
-      <stat>
-        <label>
-          Note
-        </label>
-        <value>
-          {{ root.name }}
-        </value>
-      </stat>
-      <stat>
-        <label>
-          Fret
-        </label>
-        <value>
-          {{ root.fret }}
-        </value>
-      </stat>
-      <stat>
-        <label>
-          String
-        </label>
-        <value>
-          {{ root.string }}
-        </value>
-      </stat>
-      <stat>
-        <label>
-          {{ scale | capitalize }} Scale
-        </label>
-        <value>
-          <scale>
-            <note v-for="(note, index) in getRootScale" :key="index">
-              <name>
-                {{ note.name }}
-              </name>
-              <interval>
-                {{ note.meta.degree.short }}
-              </interval>
-            </note>
-          </scale>
-        </value>
-      </stat>
+      <pattern-title>
+        {{ root.name }} {{ pattern.name | capitalize }} {{ mode | capitalize }}
+      </pattern-title>
+      <metas>
+        <meta>
+          <label>
+            Notes
+          </label>
+          <value>
+            <scale>
+              <note v-for="(note, index) in pattern.notes" :key="index">
+                <name>
+                  {{ note.name }}
+                </name>
+                <interval>
+                  {{ note.interval.degree.short }}
+                </interval>
+              </note>
+            </scale>
+          </value>
+        </meta>
+      </metas>
     </template>
     <template v-else>
       Select a Root note.
@@ -51,7 +32,7 @@
 
 <script>
   import Vue from 'vue';
-  import { mapState, mapGetters } from 'vuex';
+  import { mapState } from 'vuex';
 
   // add any custom elements here to suppress warnings
   Vue.config.ignoredElements.push('info', 'stat', 'label', 'value', 'scale', 'name', 'interval');
@@ -59,14 +40,10 @@
   export default {
     computed: {
       ...mapState({
-        notes: state => state.notes,
         root: state => state.root,
-        scale: state => state.scale,
-        scalePatterns: state => state.scalePatterns
-      }),
-      ...mapGetters([
-        'getRootScale'
-      ])
+        mode: state => state.mode,
+        pattern: state => state.pattern
+      })
     }
   };
 </script>
@@ -76,9 +53,13 @@
 <style scoped lang="scss">
   info {
     display: flex;
-    margin-top: 3em;
-    justify-content: center;
-    align-items: flex-start;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+
+    pattern-title {
+      font-size: 3rem;
+    }
 
     stat {
       display: flex;

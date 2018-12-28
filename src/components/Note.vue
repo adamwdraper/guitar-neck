@@ -1,5 +1,5 @@
 <template>
-  <router-link tag="note" :to="to" @mouseenter.native="setFocus" @mouseleave.native="setFocus" :class="{'is-root': isRoot, 'is-focus': isFocus}">
+  <router-link tag="note" :to="to" :class="{'is-root': isRoot, 'is-in-pattern': isInPattern}">
     {{ note.name }}
   </router-link>
 </template>
@@ -7,7 +7,7 @@
 <script>
   import Vue from 'vue';
   import { mapState } from 'vuex';
-  import { get } from 'lodash';
+  import { get, find } from 'lodash';
 
   // add any custom elements here to suppress warnings
   Vue.config.ignoredElements.push('note');
@@ -18,35 +18,29 @@
     },
     computed: {
       ...mapState({
-        focus: state => state.focus,
         root: state => state.root,
-        scale: state => state.scale
+        mode: state => state.mode,
+        pattern: state => state.pattern
       }),
-      isFocus() {
-        return get(this.focus, 'name') === get(this.note, 'name');
-      },
       isRoot() {
-        return this.root && get(this.root, 'fret') === get(this.note, 'fret') && get(this.root, 'string') === get(this.note, 'string');
+        return this.root.id === get(this.note, 'id');
+      },
+      isInPattern() {
+        return find(this.pattern.notes, note => note.id === this.note.id)
       },
       to() {
         return {
           name: 'root',
           params: {
-            fret: get(this.note, 'fret'),
-            string: get(this.note, 'string'),
-            scale: this.scale || 'major'
+            root: get(this.note, 'id'),
+            mode: this.$router.currentRoute.params.mode,
+            pattern: this.$router.currentRoute.params.pattern
           }
         };
-      }
-    },
-    methods: {
-      setFocus() {
-        this.$store.commit('setFocus', this.isFocus ? null : this.note);
       }
     }
   };
 </script>
-
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
@@ -60,10 +54,11 @@
     background: $color-gray-light;
     border-radius: 1em;
     position: relative;
-    transition: background 0.5s, color 0.5s;
+    transition: background 0.5s, color 0.5s, opacity 0.5s;
+    opacity: 0;
 
-    &.is-focus {
-      background: $color-blue;
+    &.is-in-pattern {
+      opacity: 1;
     }
 
     &.is-root {
