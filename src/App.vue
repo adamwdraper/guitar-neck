@@ -22,14 +22,14 @@
       font-family: 'Rubik', sans-serif;
       width: 100vw;
       height: 100vh;
-      color: #263d42;
+      color: $color-gray-dark;
       margin: 0;
   }
 
   #app {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     width: 100vw;
     height: 100vh;

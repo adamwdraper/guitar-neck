@@ -66,9 +66,6 @@
         }
 
         return grid;
-      },
-      setParams(params = {}) {
-        this.$store.commit('setParams', params);
       }
     },
     created() {
@@ -79,10 +76,10 @@
       this.$store.commit('setNoteGrid', this.generateNoteGrid());
 
       // set setParams
-      this.setParams(this.$route.params);
+      this.$store.commit('setParams', this.$route.params);
     },
     beforeRouteUpdate (to, from, next) {
-      this.setParams(to.params);
+      this.$store.commit('setParams', to.params);
 
       next();
     }
@@ -92,8 +89,10 @@
 <style lang="scss">
   guitar {
     display: flex;
+    flex: 2;
     width: 100%;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    flex-direction: column;
   }
 </style>

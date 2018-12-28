@@ -23,7 +23,7 @@
         pattern: state => state.pattern
       }),
       isRoot() {
-        return this.root.id === get(this.note, 'id');
+        return get(this.root, 'id') === get(this.note, 'id');
       },
       isInPattern() {
         return find(this.pattern.notes, note => note.id === this.note.id)
@@ -33,8 +33,8 @@
           name: 'root',
           params: {
             root: get(this.note, 'id'),
-            mode: this.$router.currentRoute.params.mode,
-            pattern: this.$router.currentRoute.params.pattern
+            mode: get(this.$router.currentRoute, 'params.mode', 'scale'),
+            pattern: get(this.$router.currentRoute, 'params.pattern', 'major')
           }
         };
       }
@@ -51,19 +51,29 @@
     justify-content: center;
     height: 2em;
     width: 2em;
-    background: $color-gray-light;
+    color: $color-gray-dark;
+    background: white;
     border-radius: 1em;
     position: relative;
-    transition: background 0.5s, color 0.5s, opacity 0.5s;
-    opacity: 0;
+    transition: all 0.5s;
+    opacity: .15;
 
     &.is-in-pattern {
+      background: $color-gray-light;
       opacity: 1;
     }
 
     &.is-root {
       background: $color-red;
       color: white;
+    }
+
+    &:hover {
+      &:not(.is-root) {
+        background: white;
+        color: $color-gray-dark;
+        opacity: 1;
+      }
     }
   }
 </style>

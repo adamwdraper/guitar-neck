@@ -36,7 +36,7 @@
 <style scoped lang="scss">
   neck {
     display: flex;
-    transform: perspective(100em) rotateY(-5deg);
+    transform: perspective(10em) rotateY(-.5deg) rotateX(1deg);
   }
 
   frets {

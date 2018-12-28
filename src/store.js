@@ -31,19 +31,34 @@ export default new Vuex.Store({
       state.tuning = tuning;
     },
     setParams(state, params) {
-      const root = find(state.notes, note => note.id === toLower(params.root));
-      const mode = toLower(params.mode);
-      const patternName = toLower(params.pattern);
+      const root = find(state.notes, note => note.id === toLower(get(params, 'root', 'c')));
+      const mode = toLower(get(params, 'mode', 'scale'));
+      const patternName = toLower(get(params, 'pattern', 'major'));
 
       // generate pattern notes
       const pattern = get(state, `modes.${mode}.${patternName}`);
       const rootIndex = findIndex(state.notes, n => n.id === root.id);
       const notes = [...state.notes.slice(rootIndex), ...state.notes.slice(0, rootIndex)];
 
-      pattern.notes = pattern.steps.map(i => ({
-        ...notes[i],
-        interval: state.intervals[i]
-      }));
+      // add root of scale
+      pattern.notes = [
+        {
+          ...notes[0],
+          interval: state.intervals[0]
+        }
+      ];
+
+      let semitones = 0;
+
+      // iterate through semitones to add the rest of the scale notes
+      for (let i = 0; i < pattern.semitones.length - 1; i++) {
+        semitones += pattern.semitones[i];
+
+        pattern.notes.push({
+          ...notes[semitones],
+          interval: state.intervals[semitones]
+        });
+      }
 
       // set param objects
       state.root = root;

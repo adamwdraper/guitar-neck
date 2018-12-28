@@ -1,26 +1,26 @@
 export default {
   major: {
     name: 'Major',
-    steps: [
-      0,
+    semitones: [
       2,
-      4,
-      5,
-      7,
-      9,
-      11
+      2,
+      1,
+      2,
+      2,
+      2,
+      1
     ]
   },
   minor: {
     name: 'Minor',
-    steps: [
-      0,
+    semitones: [
       2,
-      3,
-      5,
-      7,
-      8,
-      10
+      1,
+      2,
+      2,
+      1,
+      2,
+      2
     ]
   }
 };

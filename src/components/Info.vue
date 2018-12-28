@@ -4,28 +4,50 @@
       <pattern-title>
         {{ root.name }} {{ pattern.name | capitalize }} {{ mode | capitalize }}
       </pattern-title>
-      <metas>
-        <meta>
+      <pattern-details>
+        <detail>
           <label>
             Notes
           </label>
           <value>
-            <scale>
+            <notes>
               <note v-for="(note, index) in pattern.notes" :key="index">
                 <name>
                   {{ note.name }}
                 </name>
+              </note>
+            </notes>
+          </value>
+        </detail>
+        <detail>
+          <label>
+            Intervals
+          </label>
+          <value>
+            <notes>
+              <note v-for="(note, index) in pattern.notes" :key="index">
                 <interval>
                   {{ note.interval.degree.short }}
                 </interval>
               </note>
-            </scale>
+            </notes>
           </value>
-        </meta>
-      </metas>
-    </template>
-    <template v-else>
-      Select a Root note.
+        </detail>
+        <detail>
+          <label>
+            Semitones
+          </label>
+          <value>
+            <notes>
+              <note v-for="(semitone, index) in pattern.semitones" :key="index">
+                <interval>
+                  {{ semitone }}
+                </interval>
+              </note>
+            </notes>
+          </value>
+        </detail>
+      </pattern-details>
     </template>
   </info>
 </template>
@@ -53,43 +75,45 @@
 <style scoped lang="scss">
   info {
     display: flex;
+    flex: 1;
+    width: 100%;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
 
     pattern-title {
       font-size: 3rem;
+      font-weight: 500;
     }
 
-    stat {
+    pattern-details {
       display: flex;
-      flex-direction: column;
-      margin: 2em;
-      min-width: 5em;
+      margin-top: 1.25em;
+      font-size: .9em;
 
-      label {
-        color: $color-gray-light;
-      }
+      detail {
+        display: flex;
+        margin: 0 1rem;
 
-      value {
-        font-size: 2em;
-        color: $color-gray-dark;
+        label {
+          font-weight: 300;
+          color: $color-gray-7;
+          text-transform: uppercase;
+          margin-right: 1em;
+        }
 
-        scale {
-          display: flex;
+        value {
+          color: $color-gray-7;
+          font-weight: 500;
 
-          note {
-            margin-right: 1em;
+          notes {
             display: flex;
-            flex-direction: column;
 
-            name {
+            note {
+              margin-right: .5em;
+              display: flex;
+              flex-direction: column;
 
-            }
-
-            interval {
-              font-size: .65em;
-              color: $color-gray-7;
             }
           }
         }
