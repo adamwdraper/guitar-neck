@@ -20,7 +20,6 @@
     },
     computed: {
       ...mapState({
-        notes: state => state.notes,
         noteGrid: state => state.noteGrid,
         fretCount: state => state.fretCount,
         tuning: state => state.tuning
@@ -37,6 +36,7 @@
 <style scoped lang="scss">
   neck {
     display: flex;
+    transform: perspective(10em) rotateY(-.5deg) rotateX(1deg);
   }
 
   frets {

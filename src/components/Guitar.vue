@@ -7,7 +7,6 @@
 <script>
   import Vue from 'vue';
   import { mapState } from 'vuex';
-  import { get, isNull } from 'lodash';
 
   import Neck from './Neck.vue';
 
@@ -67,14 +66,6 @@
         }
 
         return grid;
-      },
-      setParams(params) {
-        if (!isNull(get(params, 'fret')) && get(params, 'string') && get(params, 'scale')) {
-          this.$store.commit('setParams', {
-            root: this.noteGrid[get(params, 'fret')].strings[get(params, 'string') - 1].note,
-            scale: get(params, 'scale')
-          });
-        }
       }
     },
     created() {
@@ -85,10 +76,10 @@
       this.$store.commit('setNoteGrid', this.generateNoteGrid());
 
       // set setParams
-      this.setParams(this.$route.params);
+      this.$store.commit('setParams', this.$route.params);
     },
     beforeRouteUpdate (to, from, next) {
-      this.setParams(to.params);
+      this.$store.commit('setParams', to.params);
 
       next();
     }
@@ -98,6 +89,10 @@
 <style lang="scss">
   guitar {
     display: flex;
-    transform: perspective(100em) rotateY(-5deg);
+    flex: 2;
+    width: 100%;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
   }
 </style>

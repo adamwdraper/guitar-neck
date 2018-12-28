@@ -1,57 +1,60 @@
 <template>
   <info>
     <template v-if="root">
-      <stat>
-        <label>
-          Note
-        </label>
-        <value>
-          {{ root.name }}
-        </value>
-      </stat>
-      <stat>
-        <label>
-          Fret
-        </label>
-        <value>
-          {{ root.fret }}
-        </value>
-      </stat>
-      <stat>
-        <label>
-          String
-        </label>
-        <value>
-          {{ root.string }}
-        </value>
-      </stat>
-      <stat>
-        <label>
-          {{ scale | capitalize }} Scale
-        </label>
-        <value>
-          <scale>
-            <note v-for="(note, index) in getRootScale" :key="index">
-              <name>
-                {{ note.name }}
-              </name>
-              <interval>
-                {{ note.meta.degree.short }}
-              </interval>
-            </note>
-          </scale>
-        </value>
-      </stat>
-    </template>
-    <template v-else>
-      Select a Root note.
+      <pattern-title>
+        {{ root.name }} {{ pattern.name | capitalize }} {{ mode | capitalize }}
+      </pattern-title>
+      <pattern-details>
+        <detail>
+          <label>
+            Notes
+          </label>
+          <value>
+            <notes>
+              <note v-for="(note, index) in pattern.notes" :key="index">
+                <name>
+                  {{ note.name }}
+                </name>
+              </note>
+            </notes>
+          </value>
+        </detail>
+        <detail>
+          <label>
+            Intervals
+          </label>
+          <value>
+            <notes>
+              <note v-for="(note, index) in pattern.notes" :key="index">
+                <interval>
+                  {{ note.interval.degree.short }}
+                </interval>
+              </note>
+            </notes>
+          </value>
+        </detail>
+        <detail>
+          <label>
+            Semitones
+          </label>
+          <value>
+            <notes>
+              <note v-for="(semitone, index) in pattern.semitones" :key="index">
+                <interval>
+                  {{ semitone }}
+                </interval>
+              </note>
+            </notes>
+          </value>
+        </detail>
+      </pattern-details>
     </template>
   </info>
 </template>
 
 <script>
   import Vue from 'vue';
-  import { mapState, mapGetters } from 'vuex';
+  import { mapState } from 'vuex';
 
   // add any custom elements here to suppress warnings
   Vue.config.ignoredElements.push('info', 'stat', 'label', 'value', 'scale', 'name', 'interval');
@@ -59,14 +62,10 @@
   export default {
     computed: {
       ...mapState({
-        notes: state => state.notes,
         root: state => state.root,
-        scale: state => state.scale,
-        scalePatterns: state => state.scalePatterns
-      }),
-      ...mapGetters([
-        'getRootScale'
-      ])
+        mode: state => state.mode,
+        pattern: state => state.pattern
+      })
     }
   };
 </script>
@@ -76,39 +75,45 @@
 <style scoped lang="scss">
   info {
     display: flex;
-    margin-top: 3em;
+    flex: 1;
+    width: 100%;
+    flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
 
-    stat {
+    pattern-title {
+      font-size: 3rem;
+      font-weight: 500;
+    }
+
+    pattern-details {
       display: flex;
-      flex-direction: column;
-      margin: 2em;
-      min-width: 5em;
+      margin-top: 1.25em;
+      font-size: .9em;
 
-      label {
-        color: $color-gray-light;
-      }
+      detail {
+        display: flex;
+        margin: 0 1rem;
 
-      value {
-        font-size: 2em;
-        color: $color-gray-dark;
+        label {
+          font-weight: 300;
+          color: $color-gray-7;
+          text-transform: uppercase;
+          margin-right: 1em;
+        }
 
-        scale {
-          display: flex;
+        value {
+          color: $color-gray-7;
+          font-weight: 500;
 
-          note {
-            margin-right: 1em;
+          notes {
             display: flex;
-            flex-direction: column;
 
-            name {
+            note {
+              margin-right: .5em;
+              display: flex;
+              flex-direction: column;
 
-            }
-
-            interval {
-              font-size: .65em;
-              color: $color-gray-7;
             }
           }
         }
