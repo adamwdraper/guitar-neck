@@ -2,7 +2,7 @@
 
 My attempt to thoroughly understand music theory for guitar.
 
-https://travis-ci.com/adamwdraper/guitar-neck.svg?branch=master
+![Build Status](https://travis-ci.com/adamwdraper/guitar-neck.svg?branch=master)
 
 ## Project setup
 ```
