@@ -26,8 +26,11 @@
 <style scoped lang="scss">
   string {
     position: relative;
-    padding: .25em .75em;
+    display: flex;
+    justify-content: center;
+    padding: .25em 0;
     z-index: 2;
+    width: 100%;
 
     &::before {
       content: "";
