@@ -2,7 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import { notes, intervals } from '@/config/notes.js';
-import scale from '@/config/scales.js';
+import scales from '@/config/scales.js';
+import chords from '@/config/chords.js';
 
 import { find, findIndex, toLower, get } from 'lodash';
 
@@ -13,14 +14,18 @@ export default new Vuex.Store({
     notes,
     intervals,
     modes: {
-      scale
+      scales,
+      chords
     },
     fretCount: 22,
     tuning: null,
     noteGrid: null,
+    params: null,
     root: null,
     mode: null,
-    pattern: null
+    pattern: null,
+    display: null,
+    selector: null
   },
   getters: {},
   mutations: {
@@ -30,39 +35,48 @@ export default new Vuex.Store({
     setTuning(state, tuning) {
       state.tuning = tuning;
     },
-    setParams(state, params) {
-      const root = find(state.notes, note => note.id === toLower(get(params, 'root', 'c')));
-      const mode = toLower(get(params, 'mode', 'scale'));
-      const patternName = toLower(get(params, 'pattern', 'major'));
+    setSelector(state, selector) {
+      state.selector = selector;
+    },
+    setParams(state, data) {
+      const params = {
+        root: toLower(get(data, 'root', 'c')),
+        mode: toLower(get(data, 'mode', 'scale')),
+        pattern: toLower(get(data, 'pattern', 'major')),
+        display: toLower(get(data, 'display', 'notes'))
+      };
 
       // generate pattern notes
-      const pattern = get(state, `modes.${mode}.${patternName}`);
+      const root = find(state.notes, note => note.id === params.root);
+      const pattern = find(get(state, `modes.${params.mode}s`), pattern => pattern.id === params.pattern);
       const rootIndex = findIndex(state.notes, n => n.id === root.id);
       const notes = [...state.notes.slice(rootIndex), ...state.notes.slice(0, rootIndex)];
-
-      // add root of scale
-      pattern.notes = [
-        {
-          ...notes[0],
-          interval: state.intervals[0]
-        }
-      ];
-
+      const notesInPattern = [0];
       let semitones = 0;
 
-      // iterate through semitones to add the rest of the scale notes
-      for (let i = 0; i < pattern.semitones.length - 1; i++) {
+      // generate list of indexes for notes in the pattern
+      for (let i = 0;  i < pattern.semitones.length; i++) {
         semitones += pattern.semitones[i];
 
+        notesInPattern.push(semitones);
+      }
+
+      // add notes for pattern
+      pattern.notes = [];
+
+      for (let i = 0; i < notes.length; i++) {
         pattern.notes.push({
-          ...notes[semitones],
-          interval: state.intervals[semitones]
+          ...notes[i],
+          interval: state.intervals[i],
+          isInPattern: notesInPattern.includes(i)
         });
       }
 
       // set param objects
+      state.params = params;
       state.root = root;
-      state.mode = mode;
+      state.mode = params.mode;
+      state.display = params.display;
       state.pattern = Object.assign({}, pattern);
     }
   },

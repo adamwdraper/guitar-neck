@@ -1,7 +1,7 @@
 <template>
-  <router-link tag="note" :to="to" :class="{'is-root': isRoot, 'is-in-pattern': isInPattern}">
-    {{ note.name }}
-  </router-link>
+  <note :class="{'is-root': isRoot, 'is-in-pattern': noteFromPattern.isInPattern}">
+    {{ name }}
+  </note>
 </template>
 
 <script>
@@ -20,23 +20,17 @@
       ...mapState({
         root: state => state.root,
         mode: state => state.mode,
-        pattern: state => state.pattern
+        pattern: state => state.pattern,
+        display: state => state.display
       }),
+      name() {
+        return this.display === 'intervals' ? this.noteFromPattern.interval.degree.short : this.note.name
+      },
       isRoot() {
         return get(this.root, 'id') === get(this.note, 'id');
       },
-      isInPattern() {
+      noteFromPattern() {
         return find(this.pattern.notes, note => note.id === this.note.id)
-      },
-      to() {
-        return {
-          name: 'root',
-          params: {
-            root: get(this.note, 'id'),
-            mode: get(this.$router.currentRoute, 'params.mode', 'scale'),
-            pattern: get(this.$router.currentRoute, 'params.pattern', 'major')
-          }
-        };
       }
     }
   };
@@ -45,7 +39,7 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
   note {
-    cursor: pointer;
+    cursor: default;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -56,7 +50,7 @@
     border-radius: 1em;
     position: relative;
     transition: all 0.5s;
-    opacity: .15;
+    opacity: .25;
 
     &.is-in-pattern {
       background: $color-gray-light;
@@ -64,16 +58,8 @@
     }
 
     &.is-root {
-      background: $color-red;
+      background: $color-blue;
       color: white;
-    }
-
-    &:hover {
-      &:not(.is-root) {
-        background: white;
-        color: $color-gray-dark;
-        opacity: 1;
-      }
     }
   }
 </style>

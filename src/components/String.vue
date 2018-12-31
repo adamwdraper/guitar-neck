@@ -26,8 +26,11 @@
 <style scoped lang="scss">
   string {
     position: relative;
-    padding: .25em .75em;
+    display: flex;
+    justify-content: center;
+    padding: .25em 0;
     z-index: 2;
+    width: 100%;
 
     &::before {
       content: "";
@@ -37,11 +40,18 @@
       height: .1em;
       width: 100%;
       background-color: silver;
+      background: repeating-linear-gradient(
+        to right,
+        $color-gray-4,
+        $color-gray-4 1px,
+        $color-gray-6 1px,
+        $color-gray-6 2px
+      );
     }
 
     @for $i from 0 to 10 {
       &:nth-child(#{$i + 1})::before {
-        height: .03em * $i;
+        height: .05em * $i;
       }
     }
 

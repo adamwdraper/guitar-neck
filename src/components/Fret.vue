@@ -23,7 +23,6 @@
   };
 </script>
 
-
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
   %inlay-design {
@@ -40,8 +39,17 @@
   fret {
     display: flex;
     flex-direction: column;
+    align-items: center;
     position: relative;
     background-color: ghostwhite;
+
+    $elements: 23;
+
+    @for $i from 0 to $elements {
+      &:nth-child(#{$i + 1}) {
+         min-width: #{5 - ($i * .1)}em;
+      }
+    }
 
     &:first-child {
       background-color: gray;
@@ -68,14 +76,14 @@
       z-index: 1;
     }
 
-    &:nth-child(3) inlay::before,
-    &:nth-child(5) inlay::before,
-    &:nth-child(7) inlay::before,
-    &:nth-child(9) inlay::before,
-    &:nth-child(15) inlay::before,
-    &:nth-child(17) inlay::before,
-    &:nth-child(19) inlay::before,
-    &:nth-child(21) inlay::before {
+    &:nth-child(4) inlay::before,
+    &:nth-child(6) inlay::before,
+    &:nth-child(8) inlay::before,
+    &:nth-child(10) inlay::before,
+    &:nth-child(16) inlay::before,
+    &:nth-child(18) inlay::before,
+    &:nth-child(20) inlay::before,
+    &:nth-child(22) inlay::before {
       @extend %inlay-design;
       top: calc(50% - .5em);
       left: calc(50% - .5em);
