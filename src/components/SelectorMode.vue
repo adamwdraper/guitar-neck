@@ -24,24 +24,26 @@
   import { get } from 'lodash';
 
   // add any custom elements here to suppress warnings
-  Vue.config.ignoredElements.push('selector-mode', 'modes', 'mode', 'scale');
+  Vue.config.ignoredElements.push('selector-mode', 'modes', 'mode', 'scale', 'chord');
 
   export default {
     components: {},
     computed: {
       ...mapState({
         scales: state => state.modes.scales,
-        chords: state => state.modes.chords
+        chords: state => state.modes.chords,
+        params: state => state.params
       })
     },
     methods: {
-      to(mode, scale) {
+      to(mode, pattern) {
         this.$router.push({
           name: 'root',
           params: {
-            root: get(this.$router.currentRoute, 'params.root', 'c'),
+            root: get(this.params, 'root'),
             mode,
-            pattern: get(scale, 'id')
+            pattern: get(pattern, 'id'),
+            display: get(this.params, 'display')
           }
         });
 

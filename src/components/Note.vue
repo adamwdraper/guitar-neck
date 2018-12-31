@@ -1,6 +1,6 @@
 <template>
-  <note @click.prevent="to" :class="{'is-root': isRoot, 'is-in-pattern': isInPattern}">
-    {{ note.name }}
+  <note :class="{'is-root': isRoot, 'is-in-pattern': noteFromPattern.isInPattern}">
+    {{ name }}
   </note>
 </template>
 
@@ -20,25 +20,17 @@
       ...mapState({
         root: state => state.root,
         mode: state => state.mode,
-        pattern: state => state.pattern
+        pattern: state => state.pattern,
+        display: state => state.display
       }),
+      name() {
+        return this.display === 'intervals' ? this.noteFromPattern.interval.degree.short : this.note.name
+      },
       isRoot() {
         return get(this.root, 'id') === get(this.note, 'id');
       },
-      isInPattern() {
+      noteFromPattern() {
         return find(this.pattern.notes, note => note.id === this.note.id)
-      },
-    },
-    methods: {
-      to() {
-        this.$router.push({
-          name: 'root',
-          params: {
-            root: get(this.note, 'id'),
-            mode: get(this.$router.currentRoute, 'params.mode', 'scale'),
-            pattern: get(this.$router.currentRoute, 'params.pattern', 'major')
-          }
-        });
       }
     }
   };
@@ -47,7 +39,7 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
   note {
-    cursor: pointer;
+    cursor: default;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -68,14 +60,6 @@
     &.is-root {
       background: $color-blue;
       color: white;
-    }
-
-    &:hover {
-      &:not(.is-root) {
-        background: white;
-        color: $color-gray-dark;
-        opacity: 1;
-      }
     }
   }
 </style>

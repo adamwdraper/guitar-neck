@@ -2,7 +2,7 @@
   <selector-root>
     <h2>Select a Root Note</h2>
     <notes>
-      <note v-for="note in notes" @click.prevent="to(note)" :key="note.id">
+      <note v-for="note in notes" @click.prevent="to(note)" :class="{'is-root': params.root === note.id}" :key="note.id">
         {{ note.name }}
       </note>
     </notes>
@@ -21,7 +21,8 @@
     components: {},
     computed: {
       ...mapState({
-        notes: state => state.notes
+        notes: state => state.notes,
+        params: state => state.params
       })
     },
     methods: {
@@ -30,8 +31,9 @@
           name: 'root',
           params: {
             root: get(note, 'id'),
-            mode: get(this.$router.currentRoute, 'params.mode', 'scale'),
-            pattern: get(this.$router.currentRoute, 'params.pattern', 'major')
+            mode: get(this.params, 'mode'),
+            pattern: get(this.params, 'pattern'),
+            display: get(this.params, 'display')
           }
         });
 
@@ -51,10 +53,41 @@
 
 <style lang="scss">
   selector-root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    notes {
+      display: flex;
+    }
 
     note {
-      display: block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
+      height: 2em;
+      width: 2em;
+      color: $color-gray-dark;
+      background: $color-gray-light;
+      border-radius: 1em;
+      position: relative;
+      transition: all 0.5s;
+      margin: 0 .5em;
+
+      &.is-root {
+        background: $color-blue;
+        color: white;
+      }
+
+      &:hover {
+
+        &:not(.is-root) {
+          background: white;
+          color: $color-gray-dark;
+          opacity: 1;
+        }
+      }
     }
   }
 </style>

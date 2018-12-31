@@ -14,5 +14,12 @@ export default [
       3,
       4
     ]
+  },
+  {
+    id: 'fifth',
+    name: '5',
+    semitones: [
+      7
+    ]
   }
 ];

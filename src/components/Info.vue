@@ -11,7 +11,7 @@
           </label>
           <value>
             <notes>
-              <note v-for="(note, index) in pattern.notes" :key="index">
+              <note v-for="(note, index) in patternNotes" :key="index">
                 <name>
                   {{ note.name }}
                 </name>
@@ -25,7 +25,7 @@
           </label>
           <value>
             <notes>
-              <note v-for="(note, index) in pattern.notes" :key="index">
+              <note v-for="(note, index) in patternNotes" :key="index">
                 <interval>
                   {{ note.interval.degree.short }}
                 </interval>
@@ -48,6 +48,12 @@
           </value>
         </detail>
       </pattern-details>
+      <display-details>
+        <displays>
+          <display @click.prevent="setDisplay('notes')" :class="{'is-active': display === 'notes'}">Notes</display>
+          <display @click.prevent="setDisplay('intervals')" :class="{'is-active': display === 'intervals'}">Intervals</display>
+        </displays>
+      </display-details>
     </template>
   </info>
 </template>
@@ -55,21 +61,38 @@
 <script>
   import Vue from 'vue';
   import { mapState } from 'vuex';
+  import { get, filter } from 'lodash';
 
   // add any custom elements here to suppress warnings
-  Vue.config.ignoredElements.push('info', 'pattern-title', 'root-note', 'pattern-name', 'pattern-details', 'detail', 'label', 'value', 'notes', 'note', 'name', 'interval');
+  Vue.config.ignoredElements.push('info', 'pattern-title', 'root-note', 'pattern-name', 'pattern-details', 'detail', 'display-details', 'displays', 'display', 'label', 'value', 'notes', 'note', 'name', 'interval');
 
   export default {
     computed: {
       ...mapState({
+        params: state => state.params,
         root: state => state.root,
         mode: state => state.mode,
-        pattern: state => state.pattern
-      })
+        pattern: state => state.pattern,
+        display: state => state.display
+      }),
+      patternNotes() {
+        return filter(this.pattern.notes, note => note.isInPattern);
+      }
     },
     methods: {
       openSelector(name) {
         this.$store.commit('setSelector', name);
+      },
+      setDisplay(display) {
+        this.$router.push({
+          name: 'root',
+          params: {
+            root: get(this.params, 'root'),
+            mode: get(this.params, 'mode'),
+            pattern: get(this.params, 'pattern'),
+            display: display
+          }
+        });
       }
     }
   };
@@ -80,10 +103,12 @@
   info {
     display: flex;
     flex: 1;
+    flex-shrink: 0;
     width: 100%;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin: 1em;
 
     pattern-title {
       font-size: 3rem;
@@ -130,10 +155,45 @@
 
             note {
               margin-right: .5em;
-              display: flex;
-              flex-direction: column;
 
+              &:not(:last-child) {
+
+                &:after {
+                  content: ','
+                }
+              }
             }
+          }
+        }
+      }
+    }
+
+    display-details {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: center;
+
+      displays {
+        display: block;
+        background: $color-gray-3;
+        border-radius: 1em;
+        padding: 2px;
+        font-size: .8em;
+        margin-top: 1.5em;
+
+        display {
+          display: inline-block;
+          padding: .25em .75em;
+          border-radius: 1em;
+          cursor: pointer;
+          color: $color-gray-dark;
+          transition: all 0.5s;
+
+          &.is-active {
+            cursor: default;
+            color: white;
+            background-color: $color-blue;
           }
         }
       }
