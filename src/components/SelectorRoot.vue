@@ -2,7 +2,7 @@
   <selector-root>
     <h2>Select a Root Note</h2>
     <notes>
-      <note v-for="note in notes" @click.prevent="to(note)" :class="{'is-root': params.root === note.id}" :key="note.id">
+      <note v-for="note in notes" @click.prevent="to(note)" :class="{'is-active': params.root === note.id}" :key="note.id">
         {{ note.name }}
       </note>
     </notes>
@@ -68,23 +68,23 @@
       cursor: pointer;
       height: 2em;
       width: 2em;
+      background: $color-gray-3;
       color: $color-gray-dark;
-      background: $color-gray-light;
       border-radius: 1em;
       position: relative;
       transition: all 0.5s;
       margin: 0 .5em;
 
-      &.is-root {
+      &.is-active {
         background: $color-blue;
         color: white;
       }
 
       &:hover {
 
-        &:not(.is-root) {
+        &:not(.is-active) {
           background: white;
-          color: $color-gray-dark;
+          background: $color-gray-light;
           opacity: 1;
         }
       }

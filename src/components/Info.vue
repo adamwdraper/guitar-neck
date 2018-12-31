@@ -159,7 +159,8 @@
               &:not(:last-child) {
 
                 &:after {
-                  content: ','
+                  content: ',';
+                  font-weight: 400;
                 }
               }
             }
