@@ -1,5 +1,6 @@
-export default {
-  major: {
+export default [
+  {
+    id: 'major',
     name: 'Major',
     semitones: [
       2,
@@ -11,7 +12,8 @@ export default {
       1
     ]
   },
-  minor: {
+  {
+    id: 'minor',
     name: 'Minor',
     semitones: [
       2,
@@ -23,4 +25,4 @@ export default {
       2
     ]
   }
-};
+];

@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import { notes, intervals } from '@/config/notes.js';
-import scale from '@/config/scales.js';
+import scales from '@/config/scales.js';
 
 import { find, findIndex, toLower, get } from 'lodash';
 
@@ -13,14 +13,15 @@ export default new Vuex.Store({
     notes,
     intervals,
     modes: {
-      scale
+      scales
     },
     fretCount: 22,
     tuning: null,
     noteGrid: null,
     root: null,
     mode: null,
-    pattern: null
+    pattern: null,
+    selector: null
   },
   getters: {},
   mutations: {
@@ -30,13 +31,16 @@ export default new Vuex.Store({
     setTuning(state, tuning) {
       state.tuning = tuning;
     },
+    setSelector(state, selector) {
+      state.selector = selector;
+    },
     setParams(state, params) {
       const root = find(state.notes, note => note.id === toLower(get(params, 'root', 'c')));
-      const mode = toLower(get(params, 'mode', 'scale'));
+      const mode = toLower(get(params, 'mode', 'scales'));
       const patternName = toLower(get(params, 'pattern', 'major'));
 
       // generate pattern notes
-      const pattern = get(state, `modes.${mode}.${patternName}`);
+      const pattern = find(get(state, `modes.${mode}`), pattern => pattern.id === patternName);
       const rootIndex = findIndex(state.notes, n => n.id === root.id);
       const notes = [...state.notes.slice(rootIndex), ...state.notes.slice(0, rootIndex)];
 

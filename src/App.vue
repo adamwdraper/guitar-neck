@@ -2,17 +2,23 @@
   <div id="app">
     <router-view name="info"></router-view>
     <router-view name="guitar"></router-view>
+    <Selector/>
   </div>
 </template>
 
 <script>
   import Vue from 'vue';
 
+  import Selector from '@/components/Selector.vue';
+
   // add any custom elements here to suppress warnings
   Vue.config.ignoredElements.push();
 
   export default {
-    name: 'app'
+    name: 'app',
+    components: {
+      Selector
+    }
   };
 </script>
 

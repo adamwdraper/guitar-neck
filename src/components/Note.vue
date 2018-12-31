@@ -1,7 +1,7 @@
 <template>
-  <router-link tag="note" :to="to" :class="{'is-root': isRoot, 'is-in-pattern': isInPattern}">
+  <note @click.prevent="to" :class="{'is-root': isRoot, 'is-in-pattern': isInPattern}">
     {{ note.name }}
-  </router-link>
+  </note>
 </template>
 
 <script>
@@ -28,15 +28,17 @@
       isInPattern() {
         return find(this.pattern.notes, note => note.id === this.note.id)
       },
+    },
+    methods: {
       to() {
-        return {
+        this.$router.push({
           name: 'root',
           params: {
             root: get(this.note, 'id'),
-            mode: get(this.$router.currentRoute, 'params.mode', 'scale'),
+            mode: get(this.$router.currentRoute, 'params.mode', 'scales'),
             pattern: get(this.$router.currentRoute, 'params.pattern', 'major')
           }
-        };
+        });
       }
     }
   };
@@ -56,7 +58,7 @@
     border-radius: 1em;
     position: relative;
     transition: all 0.5s;
-    opacity: .15;
+    opacity: .25;
 
     &.is-in-pattern {
       background: $color-gray-light;
@@ -64,7 +66,7 @@
     }
 
     &.is-root {
-      background: $color-red;
+      background: $color-blue;
       color: white;
     }
 

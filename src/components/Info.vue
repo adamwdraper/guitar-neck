@@ -2,7 +2,7 @@
   <info>
     <template v-if="root">
       <pattern-title>
-        {{ root.name }} {{ pattern.name | capitalize }} {{ mode | capitalize }}
+        <root-note @click.prevent="openSelector('root')">{{ root.name }}</root-note> <pattern-name @click.prevent="openSelector('mode')">{{ pattern.name | capitalize }} {{ mode | capitalize }}</pattern-name>
       </pattern-title>
       <pattern-details>
         <detail>
@@ -57,7 +57,7 @@
   import { mapState } from 'vuex';
 
   // add any custom elements here to suppress warnings
-  Vue.config.ignoredElements.push('info', 'stat', 'label', 'value', 'scale', 'name', 'interval');
+  Vue.config.ignoredElements.push('info', 'pattern-title', 'root-note', 'pattern-name', 'pattern-details', 'detail', 'label', 'value', 'notes', 'note', 'name', 'interval');
 
   export default {
     computed: {
@@ -66,10 +66,14 @@
         mode: state => state.mode,
         pattern: state => state.pattern
       })
+    },
+    methods: {
+      openSelector(name) {
+        this.$store.commit('setSelector', name);
+      }
     }
   };
 </script>
-
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
@@ -84,11 +88,26 @@
     pattern-title {
       font-size: 3rem;
       font-weight: 500;
+
+      root-note {
+        display: inline-block;
+        cursor: pointer;
+        border-bottom: 3px solid $color-blue;
+        margin-right: .5em;
+        padding: 0 .1em;
+      }
+
+      pattern-name {
+        display: inline-block;
+        cursor: pointer;
+        border-bottom: 3px solid $color-blue;
+        padding: 0 .1em;
+      }
     }
 
     pattern-details {
       display: flex;
-      margin-top: 1.25em;
+      margin-top: 2em;
       font-size: .9em;
 
       detail {

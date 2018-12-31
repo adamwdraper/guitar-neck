@@ -23,7 +23,6 @@
   };
 </script>
 
-
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
   %inlay-design {
@@ -51,7 +50,6 @@
          min-width: #{5 - ($i * .1)}em;
       }
     }
-
 
     &:first-child {
       background-color: gray;
