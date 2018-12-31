@@ -1,11 +1,18 @@
 <template>
   <selector-mode>
+    <h2>Select a Mode</h2>
     <modes>
       <mode>
-        <h2>Scales</h2>
-        <scale v-for="scale in scales" @click.prevent="to(scale)" :key="scale.id">
+        <h3>Scales</h3>
+        <scale v-for="scale in scales" @click.prevent="to('scale', scale)" :key="scale.id">
           {{ scale.name }}
         </scale>
+      </mode>
+      <mode>
+        <h3>Chords</h3>
+        <chord v-for="chord in chords" @click.prevent="to('chord', chord)" :key="chord.id">
+          {{ chord.name }}
+        </chord>
       </mode>
     </modes>
   </selector-mode>
@@ -23,16 +30,17 @@
     components: {},
     computed: {
       ...mapState({
-        scales: state => state.modes.scales
+        scales: state => state.modes.scales,
+        chords: state => state.modes.chords
       })
     },
     methods: {
-      to(scale) {
+      to(mode, scale) {
         this.$router.push({
           name: 'root',
           params: {
             root: get(this.$router.currentRoute, 'params.root', 'c'),
-            mode: get(this.$router.currentRoute, 'params.mode', 'scales'),
+            mode,
             pattern: get(scale, 'id')
           }
         });
@@ -54,7 +62,8 @@
 <style lang="scss">
   selector-mode {
 
-    scale {
+    scale,
+    chord {
       display: block;
       cursor: pointer;
     }

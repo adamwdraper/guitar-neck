@@ -35,7 +35,7 @@
           name: 'root',
           params: {
             root: get(this.note, 'id'),
-            mode: get(this.$router.currentRoute, 'params.mode', 'scales'),
+            mode: get(this.$router.currentRoute, 'params.mode', 'scale'),
             pattern: get(this.$router.currentRoute, 'params.pattern', 'major')
           }
         });

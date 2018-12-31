@@ -23,15 +23,6 @@
 </script>
 
 <style lang="scss">
-  html,
-  body {
-      font-family: 'Rubik', sans-serif;
-      width: 100vw;
-      height: 100vh;
-      color: $color-gray-dark;
-      margin: 0;
-  }
-
   #app {
     display: flex;
     flex-direction: column;

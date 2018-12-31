@@ -1,5 +1,6 @@
 <template>
   <selector-root>
+    <h2>Select a Root Note</h2>
     <notes>
       <note v-for="note in notes" @click.prevent="to(note)" :key="note.id">
         {{ note.name }}
@@ -29,10 +30,12 @@
           name: 'root',
           params: {
             root: get(note, 'id'),
-            mode: get(this.$router.currentRoute, 'params.mode', 'scales'),
+            mode: get(this.$router.currentRoute, 'params.mode', 'scale'),
             pattern: get(this.$router.currentRoute, 'params.pattern', 'major')
           }
         });
+
+        this.close();
       },
       closeOnEsc(evt) {
         if (evt.keyCode === 27) {

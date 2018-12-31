@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 
 import { notes, intervals } from '@/config/notes.js';
 import scales from '@/config/scales.js';
+import chords from '@/config/chords.js';
 
 import { find, findIndex, toLower, get } from 'lodash';
 
@@ -13,7 +14,8 @@ export default new Vuex.Store({
     notes,
     intervals,
     modes: {
-      scales
+      scales,
+      chords
     },
     fretCount: 22,
     tuning: null,
@@ -36,11 +38,11 @@ export default new Vuex.Store({
     },
     setParams(state, params) {
       const root = find(state.notes, note => note.id === toLower(get(params, 'root', 'c')));
-      const mode = toLower(get(params, 'mode', 'scales'));
+      const mode = toLower(get(params, 'mode', 'scale'));
       const patternName = toLower(get(params, 'pattern', 'major'));
 
       // generate pattern notes
-      const pattern = find(get(state, `modes.${mode}`), pattern => pattern.id === patternName);
+      const pattern = find(get(state, `modes.${mode}s`), pattern => pattern.id === patternName);
       const rootIndex = findIndex(state.notes, n => n.id === root.id);
       const notes = [...state.notes.slice(rootIndex), ...state.notes.slice(0, rootIndex)];
 
@@ -53,9 +55,10 @@ export default new Vuex.Store({
       ];
 
       let semitones = 0;
+      const length = mode === 'scale' ? pattern.semitones.length - 1 : pattern.semitones.length;
 
       // iterate through semitones to add the rest of the scale notes
-      for (let i = 0; i < pattern.semitones.length - 1; i++) {
+      for (let i = 0; i < length; i++) {
         semitones += pattern.semitones[i];
 
         pattern.notes.push({
