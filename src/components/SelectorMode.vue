@@ -41,13 +41,14 @@
     },
     methods: {
       to(mode, pattern) {
+        const params = this.$store.getters.getParams;
+
         this.$router.push({
           name: 'root',
           params: {
-            root: get(this.params, 'root'),
+            ...params,
             mode,
-            pattern: get(pattern, 'id'),
-            display: get(this.params, 'display')
+            pattern: get(pattern, 'id')
           }
         });
 

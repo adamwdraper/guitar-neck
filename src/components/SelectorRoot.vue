@@ -27,13 +27,13 @@
     },
     methods: {
       to(note) {
+        const params = this.$store.getters.getParams;
+
         this.$router.push({
           name: 'root',
           params: {
-            root: get(note, 'id'),
-            mode: get(this.params, 'mode'),
-            pattern: get(this.params, 'pattern'),
-            display: get(this.params, 'display')
+            ...params,
+            root: get(note, 'id')
           }
         });
 
