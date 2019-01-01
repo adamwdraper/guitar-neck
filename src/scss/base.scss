@@ -1,16 +1,21 @@
 @import "@/scss/variables.scss";
+@import "@/scss/icons/style.scss";
 
 html,
 body {
     font-family: 'Rubik', sans-serif;
     width: 100vw;
     height: 100vh;
-    color: $color-gray-dark;
+    color: $color-gray-9;
     margin: 0;
 }
 
 h2 {
   font-size: 1.5em;
+
+  i {
+    margin-left: 1em;
+  }
 }
 
 h3 {
