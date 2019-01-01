@@ -12,7 +12,7 @@ const appRouter = new Router({
     : '/',
   routes: [
     {
-      path: '/:root?/:mode?/:pattern?/:display?',
+      path: '/:root?/:mode?/:pattern?/:display?/:shape?',
       name: 'root',
       components: {
         guitar: Guitar,
