@@ -42,9 +42,4 @@
   frets {
     display: flex;
   }
-
-  frets {
-    border-top: 2px solid whitesmoke;
-    border-bottom: 2px solid whitesmoke;
-  }
 </style>

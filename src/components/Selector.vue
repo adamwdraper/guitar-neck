@@ -1,8 +1,10 @@
 <template>
-  <selector v-if="selector">
-    <SelectorRoot v-if="selector === 'root'"/>
-    <SelectorMode v-if="selector === 'mode'"/>
-  </selector>
+  <transition name="slide-fade">
+    <selector v-if="selector">
+      <SelectorRoot v-if="selector === 'root'"/>
+      <SelectorMode v-if="selector === 'mode'"/>
+    </selector>
+  </transition>
 </template>
 
 <script>
@@ -55,6 +57,22 @@
     background: white;
     display: flex;
     align-items: center;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 7em;
+
+    &.slide-fade-enter-active {
+      transition: all .3s ease;
+    }
+
+    &.slide-fade-leave-active {
+      transition: all .3s ease;
+    }
+
+    &.slide-fade-enter,
+    &.slide-fade-leave-to {
+      transform: translateY(2em);
+      opacity: 0;
+    }
   }
 </style>

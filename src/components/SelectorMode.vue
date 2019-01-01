@@ -1,6 +1,6 @@
 <template>
   <selector-mode>
-    <h2>Select a Mode</h2>
+    <h2>Select a Mode <i @click.prevent="close" class="x"/></h2>
     <modes>
       <mode>
         <h3>Scales</h3>
@@ -97,6 +97,7 @@
       transition: all 0.5s;
       padding: .25em .75em;
       margin: .25em .5em;
+      min-width: 10em;
 
       &.is-active {
         background: $color-blue;

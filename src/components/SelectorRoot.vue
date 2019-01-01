@@ -1,6 +1,6 @@
 <template>
   <selector-root>
-    <h2>Select a Root Note</h2>
+    <h2>Select a Root Note <i @click.prevent="close" class="x"/></h2>
     <notes>
       <note v-for="note in notes" @click.prevent="to(note)" :class="{'is-active': params.root === note.id}" :key="note.id">
         {{ note.name }}
@@ -67,13 +67,14 @@
       justify-content: center;
       cursor: pointer;
       height: 2em;
-      width: 2em;
+      width: 3em;
       background: $color-gray-3;
       color: $color-gray-dark;
       border-radius: 1em;
       position: relative;
       transition: all 0.5s;
       margin: 0 .5em;
+
 
       &.is-active {
         background: $color-blue;
