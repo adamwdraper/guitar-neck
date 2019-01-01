@@ -49,18 +49,10 @@
         </detail>
       </pattern-details>
       <display-details>
-        <selections>
-          <selection @click.prevent="setDisplay('notes')" :class="{'is-active': display === 'notes'}">Notes</selection>
-          <selection @click.prevent="setDisplay('intervals')" :class="{'is-active': display === 'intervals'}">Intervals</selection>
-        </selections>
-        <selections>
-          <selection @click.prevent="setShape(null)" :class="{'is-active': !shape}">All</selection>
-          <selection @click.prevent="setShape('c')" :class="{'is-active': shape === 'c'}">C</selection>
-          <selection @click.prevent="setShape('a')" :class="{'is-active': shape === 'a'}">A</selection>
-          <selection @click.prevent="setShape('g')" :class="{'is-active': shape === 'g'}">G</selection>
-          <selection @click.prevent="setShape('e')" :class="{'is-active': shape === 'e'}">E</selection>
-          <selection @click.prevent="setShape('d')" :class="{'is-active': shape === 'd'}">D</selection>
-        </selections>
+        <displays>
+          <display @click.prevent="setDisplay('notes')" :class="{'is-active': display === 'notes'}">Notes</display>
+          <display @click.prevent="setDisplay('intervals')" :class="{'is-active': display === 'intervals'}">Intervals</display>
+        </displays>
       </display-details>
     </template>
   </info>
@@ -69,10 +61,10 @@
 <script>
   import Vue from 'vue';
   import { mapState } from 'vuex';
-  import { filter } from 'lodash';
+  import { get, filter } from 'lodash';
 
   // add any custom elements here to suppress warnings
-  Vue.config.ignoredElements.push('info', 'pattern-title', 'root-note', 'pattern-name', 'pattern-details', 'detail', 'display-details', 'selections', 'selection', 'label', 'value', 'notes', 'note', 'name', 'interval');
+  Vue.config.ignoredElements.push('info', 'pattern-title', 'root-note', 'pattern-name', 'pattern-details', 'detail', 'display-details', 'displays', 'display', 'label', 'value', 'notes', 'note', 'name', 'interval');
 
   export default {
     computed: {
@@ -81,8 +73,7 @@
         root: state => state.root,
         mode: state => state.mode,
         pattern: state => state.pattern,
-        display: state => state.display,
-        shape: state => state.shape
+        display: state => state.display
       }),
       patternNotes() {
         return filter(this.pattern.notes, note => note.isInPattern);
@@ -93,24 +84,13 @@
         this.$store.commit('setSelector', name);
       },
       setDisplay(display) {
-        const params = this.$store.getters.getParams;
-
         this.$router.push({
           name: 'root',
           params: {
-            ...params,
-            display
-          }
-        });
-      },
-      setShape(shape) {
-        const params = this.$store.getters.getParams;
-
-        this.$router.push({
-          name: 'root',
-          params: {
-            ...params,
-            shape
+            root: get(this.params, 'root'),
+            mode: get(this.params, 'mode'),
+            pattern: get(this.params, 'pattern'),
+            display: display
           }
         });
       }
@@ -195,16 +175,15 @@
       align-items: center;
       justify-content: center;
 
-      selections {
+      displays {
         display: block;
         background: $color-gray-3;
         border-radius: 1em;
         padding: 2px;
         font-size: .8em;
         margin-top: 1.5em;
-        margin: 1.5em 1em 0;
 
-        selection {
+        display {
           display: inline-block;
           padding: .25em .75em;
           border-radius: 1em;

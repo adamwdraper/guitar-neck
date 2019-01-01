@@ -25,8 +25,7 @@ export default new Vuex.Store({
     mode: null,
     pattern: null,
     display: null,
-    selector: null,
-    shape: null
+    selector: null
   },
   getters: {
     getParams(state) {
@@ -48,8 +47,7 @@ export default new Vuex.Store({
         root: toLower(get(data, 'root', 'c')),
         mode: toLower(get(data, 'mode', 'scale')),
         pattern: toLower(get(data, 'pattern', 'major')),
-        display: toLower(get(data, 'display', 'notes')),
-        shape: toLower(get(data, 'shape', null))
+        display: toLower(get(data, 'display', 'notes'))
       };
 
       // generate pattern notes
@@ -83,7 +81,6 @@ export default new Vuex.Store({
       state.root = root;
       state.mode = params.mode;
       state.display = params.display;
-      state.shape = params.shape;
       state.pattern = Object.assign({}, pattern);
     }
   },
