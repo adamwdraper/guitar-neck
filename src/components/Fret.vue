@@ -3,6 +3,7 @@
     <inlay/>
     <String v-for="(string, index) in strings" :string="string" :key="index"/>
     <fret-bar/>
+    <fret-number><span>{{ fretNumber }}</span></fret-number>
   </fret>
 </template>
 
@@ -18,7 +19,8 @@
       String
     },
     props: {
-      strings: Array
+      strings: Array,
+      fretNumber: Number
     }
   };
 </script>
@@ -43,6 +45,25 @@
     position: relative;
     background-color: ghostwhite;
 
+    fret-number {
+      display: none;
+      position: absolute;
+      background: $color-gray-4;
+      color: $color-gray-8;
+      width: 30px;
+      height: 30px;
+      border-radius: 50% 0 50% 50%;
+      align-items: center;
+      justify-content: center;
+      bottom: -3em;
+      transform: rotate(-45deg);
+
+      span {
+        font-size: .85em;
+        transform: rotate(45deg);
+      }
+    }
+
     $elements: 23;
 
     @for $i from 0 to $elements {
@@ -51,7 +72,7 @@
       }
     }
 
-    &:first-child {
+    &.fret-0 {
       background-color: gray;
       border-radius: .25em 0 0 .25em;
       padding-right: .5em;
@@ -67,6 +88,21 @@
       }
     }
 
+    &.fret-3,
+    &.fret-5,
+    &.fret-7,
+    &.fret-9,
+    &.fret-12,
+    &.fret-15,
+    &.fret-17,
+    &.fret-19,
+    &.fret-21 {
+
+      fret-number {
+        display: flex;
+      }
+    }
+
     inlay {
       position: absolute;
       top: 0;
@@ -76,28 +112,28 @@
       z-index: 1;
     }
 
-    &:nth-child(4) inlay::before,
-    &:nth-child(6) inlay::before,
-    &:nth-child(8) inlay::before,
-    &:nth-child(10) inlay::before,
-    &:nth-child(16) inlay::before,
-    &:nth-child(18) inlay::before,
-    &:nth-child(20) inlay::before,
-    &:nth-child(22) inlay::before {
+    &.fret-3 inlay::before,
+    &.fret-5 inlay::before,
+    &.fret-7 inlay::before,
+    &.fret-9 inlay::before,
+    &.fret-15 inlay::before,
+    &.fret-17 inlay::before,
+    &.fret-19 inlay::before,
+    &.fret-21 inlay::before {
       @extend %inlay-design;
       top: calc(50% - .5em);
       left: calc(50% - .5em);
     }
 
-    &:nth-child(12) inlay::before,
-    &:nth-child(24) inlay::before {
+    &.fret-12 inlay::before,
+    &.fret-24 inlay::before {
       @extend %inlay-design;
       top: calc(35% - .5em);
       left: calc(50% - .5em);
     }
 
-    &:nth-child(12) inlay::after,
-    &:nth-child(24) inlay::after {
+    &.fret-12 inlay::after,
+    &.fret-24 inlay::after {
       @extend %inlay-design;
       top: calc(65% - .5em);
       left: calc(50% - .5em);

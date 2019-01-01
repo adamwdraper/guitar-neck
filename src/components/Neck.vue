@@ -1,7 +1,7 @@
 <template>
   <neck>
     <frets>
-      <Fret v-for="(fret, index) in frets" :strings="fret.strings" :key="index + 1"/>
+      <Fret v-for="(fret, index) in frets" :strings="fret.strings" :fretNumber="index" :class="`fret-${index}`" :key="index + 1"/>
     </frets>
   </neck>
 </template>
