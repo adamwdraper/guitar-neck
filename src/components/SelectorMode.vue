@@ -41,13 +41,14 @@
     },
     methods: {
       to(mode, pattern) {
+        const params = this.$store.getters.getParams;
+
         this.$router.push({
           name: 'root',
           params: {
-            root: get(this.params, 'root'),
+            ...params,
             mode,
-            pattern: get(pattern, 'id'),
-            display: get(this.params, 'display')
+            pattern: get(pattern, 'id')
           }
         });
 
@@ -70,6 +71,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    max-width: 65em;
 
     modes {
       display: flex;
@@ -79,6 +81,7 @@
     scales,
     chords {
       display: flex;
+      flex-flow: wrap;
     }
 
     scale,
@@ -93,7 +96,7 @@
       position: relative;
       transition: all 0.5s;
       padding: .25em .75em;
-      margin: 0 .5em;
+      margin: .25em .5em;
 
       &.is-active {
         background: $color-blue;

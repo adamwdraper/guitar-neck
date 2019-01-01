@@ -61,7 +61,7 @@
 <script>
   import Vue from 'vue';
   import { mapState } from 'vuex';
-  import { get, filter } from 'lodash';
+  import { filter } from 'lodash';
 
   // add any custom elements here to suppress warnings
   Vue.config.ignoredElements.push('info', 'pattern-title', 'root-note', 'pattern-name', 'pattern-details', 'detail', 'display-details', 'displays', 'display', 'label', 'value', 'notes', 'note', 'name', 'interval');
@@ -84,13 +84,13 @@
         this.$store.commit('setSelector', name);
       },
       setDisplay(display) {
+        const params = this.$store.getters.getParams;
+
         this.$router.push({
           name: 'root',
           params: {
-            root: get(this.params, 'root'),
-            mode: get(this.params, 'mode'),
-            pattern: get(this.params, 'pattern'),
-            display: display
+            ...params,
+            display
           }
         });
       }

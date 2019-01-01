@@ -27,7 +27,11 @@ export default new Vuex.Store({
     display: null,
     selector: null
   },
-  getters: {},
+  getters: {
+    getParams(state) {
+      return state.params;
+    }
+  },
   mutations: {
     setNoteGrid(state, noteGrid) {
       state.noteGrid = noteGrid;
