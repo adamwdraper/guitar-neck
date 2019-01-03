@@ -40,7 +40,8 @@
       height: .1em;
       width: 100%;
       background-color: silver;
-      background: repeating-linear-gradient(
+      background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.1) 100%),
+      repeating-linear-gradient(
         to right,
         $color-gray-4,
         $color-gray-4 1px,
