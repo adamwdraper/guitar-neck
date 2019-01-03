@@ -94,6 +94,7 @@
     align-items: center;
     justify-content: flex-start;
     flex-direction: column;
-    margin-top: 3em;
+    // include space for fret numbers
+    margin-bottom: 3em;
   }
 </style>

@@ -3,7 +3,7 @@
     <inlay/>
     <String v-for="(string, index) in strings" :string="string" :key="index"/>
     <fret-bar/>
-    <fret-number><i class="droplet"/><span>{{ fretNumber }}</span></fret-number>
+    <fret-number><span>{{ fretNumber }}</span></fret-number>
   </fret>
 </template>
 
@@ -48,26 +48,19 @@
     fret-number {
       display: none;
       position: absolute;
-      color: $color-gray-6;
+      background: $color-gray-3;
+      color: $color-gray-7;
       width: 30px;
       height: 30px;
+      border-radius: 50% 0 50% 50%;
       align-items: center;
       justify-content: center;
-      top: -2.75em;
-
-
-      i {
-        transform: rotate(180deg);
-        font-size: 2.35em;
-        font-weight: lighter;
-        position: absolute;
-        color: $color-gray-4;
-      }
+      bottom: -3em;
+      transform: rotate(-45deg);
 
       span {
-        display: block;
         font-size: .85em;
-        margin-top: -8px;
+        transform: rotate(45deg);
       }
     }
 
@@ -154,7 +147,7 @@
       height: 100%;
       width: .2em;
       border-radius: .1em;
-      background-color: rgba(225, 225, 225, .7);
+      background: rgba(225, 225, 225, .7);
       z-index: 0
     }
   }
