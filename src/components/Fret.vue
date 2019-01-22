@@ -12,7 +12,7 @@
   import String from './String.vue';
 
   // add any custom elements here to suppress warnings
-  Vue.config.ignoredElements.push('fret', 'inlay', 'fret-bar');
+  Vue.config.ignoredElements.push('fret', 'inlay', 'fret-bar', 'fret-number');
 
   export default {
     components: {

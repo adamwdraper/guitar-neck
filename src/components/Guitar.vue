@@ -20,6 +20,7 @@
     computed: {
       ...mapState({
         notes: state => state.notes,
+        tunings: state => state.notes,
         fretCount: state => state.fretCount,
         noteGrid: state => state.noteGrid,
         tuning: state => state.tuning

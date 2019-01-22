@@ -49,6 +49,9 @@
         </detail>
       </pattern-details>
       <display-details>
+        <tunings>
+           <tuning @click.prevent="openSelector('tunings')">Tuning {{ tuning.name | capitalize }}</tuning>
+        </tunings>
         <displays>
           <display @click.prevent="setDisplay('notes')" :class="{'is-active': display === 'notes'}">Notes</display>
           <display @click.prevent="setDisplay('intervals')" :class="{'is-active': display === 'intervals'}">Intervals</display>
@@ -64,13 +67,14 @@
   import { filter } from 'lodash';
 
   // add any custom elements here to suppress warnings
-  Vue.config.ignoredElements.push('info', 'pattern-title', 'root-note', 'pattern-name', 'pattern-details', 'detail', 'display-details', 'displays', 'display', 'label', 'value', 'notes', 'note', 'name', 'interval');
+  Vue.config.ignoredElements.push('info', 'pattern-title', 'root-note', 'pattern-name', 'pattern-details', 'detail', 'display-details', 'displays', 'display', 'tunings', 'tuning', 'label', 'value', 'notes', 'note', 'name', 'interval');
 
   export default {
     computed: {
       ...mapState({
         params: state => state.params,
         root: state => state.root,
+        tuning: state => state.tuning,
         mode: state => state.mode,
         pattern: state => state.pattern,
         display: state => state.display

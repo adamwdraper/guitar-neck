@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import { notes, intervals } from '@/config/notes.js';
+import tunings from '@/config/tunings.js';
 import scales from '@/config/scales.js';
 import chords from '@/config/chords.js';
 
@@ -13,14 +14,15 @@ export default new Vuex.Store({
   state: {
     notes,
     intervals,
+    tunings,
     modes: {
       scales,
       chords
     },
     fretCount: 22,
+    params: null,
     tuning: null,
     noteGrid: null,
-    params: null,
     root: null,
     mode: null,
     pattern: null,
@@ -47,6 +49,7 @@ export default new Vuex.Store({
         root: toLower(get(data, 'root', 'c')),
         mode: toLower(get(data, 'mode', 'scale')),
         pattern: toLower(get(data, 'pattern', 'major')),
+        tuning: toLower(get(data, 'tuning', 'standard')),
         display: toLower(get(data, 'display', 'notes'))
       };
 
@@ -81,6 +84,7 @@ export default new Vuex.Store({
       state.root = root;
       state.mode = params.mode;
       state.display = params.display;
+      state.tuning = params.tuning;
       state.pattern = Object.assign({}, pattern);
     }
   },
