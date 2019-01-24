@@ -1,6 +1,7 @@
 <template>
   <info>
     <template v-if="root">
+      <tuning @click.prevent="openSelector('tunings')">{{ tuning.name | capitalize }} Tuning</tuning>
       <pattern-title>
         <root-note @click.prevent="openSelector('root')">{{ root.name }}</root-note> <pattern-name @click.prevent="openSelector('mode')">{{ pattern.name | capitalize }} {{ mode | capitalize }}</pattern-name>
       </pattern-title>
@@ -49,9 +50,6 @@
         </detail>
       </pattern-details>
       <display-details>
-        <tunings>
-           <tuning @click.prevent="openSelector('tunings')">Tuning {{ tuning.name | capitalize }}</tuning>
-        </tunings>
         <displays>
           <display @click.prevent="setDisplay('notes')" :class="{'is-active': display === 'notes'}">Notes</display>
           <display @click.prevent="setDisplay('intervals')" :class="{'is-active': display === 'intervals'}">Intervals</display>
@@ -114,6 +112,16 @@
     align-items: center;
     margin: 1em;
 
+
+    tuning {
+      display: block;
+      cursor: pointer;
+      border-bottom: 3px solid $color-blue;
+      padding: 0 .1em;
+      margin-bottom: 1em;
+      font-size: 1.5em;
+    }
+
     pattern-title {
       font-size: 3rem;
       font-weight: 500;
@@ -131,6 +139,13 @@
         cursor: pointer;
         border-bottom: 3px solid $color-blue;
         padding: 0 .1em;
+      }
+
+      span {
+        font-size: .5em;
+        display: inline-block;
+        margin: 0 .5em;
+        font-weight: 400;
       }
     }
 
@@ -178,6 +193,7 @@
       width: 100%;
       align-items: center;
       justify-content: center;
+      margin-top: 1.5em;
 
       displays {
         display: block;
@@ -185,7 +201,6 @@
         border-radius: 1em;
         padding: 2px;
         font-size: .8em;
-        margin-top: 1.5em;
 
         display {
           display: inline-block;

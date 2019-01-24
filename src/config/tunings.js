@@ -96,5 +96,17 @@ export default [
       notes[7],
       notes[0]
     ]
+  },
+  {
+    id: 'open-c',
+    name: 'Open C',
+    notes: [
+      notes[7],
+      notes[3],
+      notes[10],
+      notes[3],
+      notes[10],
+      notes[3]
+    ]
   }
 ];
