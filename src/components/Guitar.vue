@@ -7,6 +7,7 @@
 <script>
   import Vue from 'vue';
   import { mapState } from 'vuex';
+  import { find } from 'lodash';
 
   import Neck from './Neck.vue';
 
@@ -19,22 +20,27 @@
     },
     computed: {
       ...mapState({
+        params: state => state.params,
         notes: state => state.notes,
+        tunings: state => state.tunings,
         fretCount: state => state.fretCount,
         noteGrid: state => state.noteGrid,
         tuning: state => state.tuning
       }),
     },
     methods: {
+      setup(params) {
+        // set setParams
+        this.$store.commit('setParams', params);
+
+        // set initial tuning
+        this.$store.commit('setTuning', this.generateTuning());
+
+        // set grid
+        this.$store.commit('setNoteGrid', this.generateNoteGrid());
+      },
       generateTuning() {
-        return [
-          this.notes[7],
-          this.notes[2],
-          this.notes[10],
-          this.notes[5],
-          this.notes[0],
-          this.notes[7]
-        ];
+        return find(this.tunings, tuning => this.params.tuning === tuning.id, this.tunings[0]);
       },
       generateNoteGrid() {
         const grid = [];
@@ -44,9 +50,8 @@
             strings: []
           };
 
-          for (let x = 0; x < this.tuning.length; x++) {
-            let tuning = this.tuning[x];
-            let baseNoteIndex = this.notes.indexOf(tuning);
+          for (let x = 0; x < this.tuning.notes.length; x++) {
+            let baseNoteIndex = this.notes.indexOf(this.tuning.notes[x]);
 
             // generate notes
             let note = baseNoteIndex + i;
@@ -69,17 +74,10 @@
       }
     },
     created() {
-      // set initial tuning
-      this.$store.commit('setTuning', this.generateTuning());
-
-      // set grid
-      this.$store.commit('setNoteGrid', this.generateNoteGrid());
-
-      // set setParams
-      this.$store.commit('setParams', this.$route.params);
+      this.setup(this.$route.params);
     },
     beforeRouteUpdate (to, from, next) {
-      this.$store.commit('setParams', to.params);
+      this.setup(to.params);
 
       next();
     }

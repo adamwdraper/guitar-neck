@@ -1,6 +1,7 @@
 <template>
   <info>
     <template v-if="root">
+      <tuning @click.prevent="openSelector('tunings')">{{ tuning.name | capitalize }} Tuning</tuning>
       <pattern-title>
         <root-note @click.prevent="openSelector('root')">{{ root.name }}</root-note> <pattern-name @click.prevent="openSelector('mode')">{{ pattern.name | capitalize }} {{ mode | capitalize }}</pattern-name>
       </pattern-title>
@@ -64,13 +65,14 @@
   import { filter } from 'lodash';
 
   // add any custom elements here to suppress warnings
-  Vue.config.ignoredElements.push('info', 'pattern-title', 'root-note', 'pattern-name', 'pattern-details', 'detail', 'display-details', 'displays', 'display', 'label', 'value', 'notes', 'note', 'name', 'interval');
+  Vue.config.ignoredElements.push('info', 'pattern-title', 'root-note', 'pattern-name', 'pattern-details', 'detail', 'display-details', 'displays', 'display', 'tunings', 'tuning', 'label', 'value', 'notes', 'note', 'name', 'interval');
 
   export default {
     computed: {
       ...mapState({
         params: state => state.params,
         root: state => state.root,
+        tuning: state => state.tuning,
         mode: state => state.mode,
         pattern: state => state.pattern,
         display: state => state.display
@@ -110,6 +112,16 @@
     align-items: center;
     margin: 1em;
 
+
+    tuning {
+      display: block;
+      cursor: pointer;
+      border-bottom: 3px solid $color-blue;
+      padding: 0 .1em;
+      margin-bottom: 1em;
+      font-size: 1.5em;
+    }
+
     pattern-title {
       font-size: 3rem;
       font-weight: 500;
@@ -127,6 +139,13 @@
         cursor: pointer;
         border-bottom: 3px solid $color-blue;
         padding: 0 .1em;
+      }
+
+      span {
+        font-size: .5em;
+        display: inline-block;
+        margin: 0 .5em;
+        font-weight: 400;
       }
     }
 
@@ -174,6 +193,7 @@
       width: 100%;
       align-items: center;
       justify-content: center;
+      margin-top: 1.5em;
 
       displays {
         display: block;
@@ -181,7 +201,6 @@
         border-radius: 1em;
         padding: 2px;
         font-size: .8em;
-        margin-top: 1.5em;
 
         display {
           display: inline-block;

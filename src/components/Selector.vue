@@ -3,6 +3,7 @@
     <selector v-if="selector">
       <SelectorRoot v-if="selector === 'root'"/>
       <SelectorMode v-if="selector === 'mode'"/>
+      <SelectorTunings v-if="selector === 'tunings'"/>
     </selector>
   </transition>
 </template>
@@ -13,6 +14,7 @@
 
   import SelectorRoot from './SelectorRoot';
   import SelectorMode from './SelectorMode';
+  import SelectorTunings from './SelectorTunings';
 
   // add any custom elements here to suppress warnings
   Vue.config.ignoredElements.push('selector');
@@ -20,7 +22,8 @@
   export default {
     components: {
       SelectorRoot,
-      SelectorMode
+      SelectorMode,
+      SelectorTunings
     },
     computed: {
       ...mapState({
